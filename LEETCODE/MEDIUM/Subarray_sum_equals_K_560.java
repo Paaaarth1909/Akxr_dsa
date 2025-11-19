@@ -20,3 +20,17 @@ Constraints:
 -1000 <= nums[i] <= 1000
 -107 <= k <= 107
  */
+public class Subarray_sum_equals_K_560 {
+    public int subarraySum(int[] nums, int k) {
+        int count = 0;
+        for (int start = 0; start < nums.length; start++) {
+            int sum = 0;
+            for (int end = start; end < nums.length; end++) {
+                sum += nums[end];
+                if (sum == k)
+                    count++;
+            }
+        }
+        return count;
+    }
+}
