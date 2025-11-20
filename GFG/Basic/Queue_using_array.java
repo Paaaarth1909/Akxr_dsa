@@ -1,3 +1,5 @@
+package GFG.Basic;
+
 /* Implement a Queue using an Array, where the size of the array, n is given.
 The Queue must support the following operations:
 
