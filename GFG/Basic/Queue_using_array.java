@@ -43,3 +43,49 @@ Constraints:
 0 ≤ x ≤ 105
 
  */
+class myQueue {
+
+    int[] arr;
+    int front, rear, size, capacity;
+
+    public myQueue(int n) {
+        arr = new int[n];
+        capacity = n;
+        front = 0;
+        rear = -1;
+        size = 0;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public boolean isFull() {
+        return size == capacity;
+    }
+
+    public void enqueue(int x) {
+        if (!isFull()) {
+            rear = (rear + 1) % capacity;
+            arr[rear] = x;
+            size++;
+        }
+    }
+
+    public void dequeue() {
+        if (!isEmpty()) {
+            front = (front + 1) % capacity;
+            size--;
+        }
+    }
+
+    public int getFront() {
+        if (isEmpty()) return -1;
+        return arr[front];
+    }
+
+    public int getRear() {
+        if (isEmpty()) return -1;
+        return arr[rear];
+    }
+}
