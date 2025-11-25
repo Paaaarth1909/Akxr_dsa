@@ -17,4 +17,21 @@ Constraints:
 2 ≤ arr.size() ≤ 105
 1 ≤ arr[i] ≤ 105
 
- */
+*/
+class Solution {
+    public int getSecondLargest(int[] arr) {
+      int largest=-1 , second=-1;
+      for ( int x : arr){
+          if ( x > largest ) {
+              second = largest ;
+              largest = x ;
+              
+          } else if ( x > second && x < largest ) {
+              second = x;
+          }
+      }
+      
+      return second;
+        
+    }
+}
