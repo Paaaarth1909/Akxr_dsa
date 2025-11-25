@@ -31,3 +31,14 @@ Constraints:
 1 <= nums[i] <= 50
  
 */
+class Solution {
+    public int minimumOperations(int[] nums) {
+        int ops = 0;
+        for(int x : nums){
+            int r = x % 3;
+            if(r == 1) ops++;
+            else if(r == 2) ops++;
+        }
+        return ops;
+    }
+}
