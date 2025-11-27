@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Implement a Stack using a Linked List, this stack has no fixed capacity and can grow dynamically until memory is available.
 The Stack must support the following operations:
 
