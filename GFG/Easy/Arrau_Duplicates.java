@@ -15,6 +15,9 @@ Constraints:
 1 ≤ arr[i] ≤ n
 
 */
+
+import java.util.ArrayList;
+
 class Solution {
     public ArrayList<Integer> findDuplicates(int[] arr) {
         ArrayList<Integer> ans = new ArrayList<>();
