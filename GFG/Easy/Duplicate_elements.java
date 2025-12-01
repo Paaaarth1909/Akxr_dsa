@@ -23,3 +23,25 @@ Output:
 1 3
 
 */
+class Geeks {
+    public static void SortedDuplicates(int arr[], int n) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        
+        for (int x : arr) {
+            map.put(x, map.getOrDefault(x, 0) + 1);
+        }
+        
+        ArrayList<Integer> ans = new ArrayList<>();
+        
+        for (int key : map.keySet()) {
+            if (map.get(key) > 1) ans.add(key);
+        }
+        
+        if (ans.isEmpty()) {
+            System.out.print(-1);
+        } else {
+            Collections.sort(ans);
+            for (int x : ans) System.out.print(x + " ");
+        }
+    }
+}
