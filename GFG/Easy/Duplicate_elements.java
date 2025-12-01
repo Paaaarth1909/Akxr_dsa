@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* You are given an array A of size N. The array contains almost distinct elements with some duplicated. You have to print the elements in sorted order which appears more than once.
 
 Input Format:
