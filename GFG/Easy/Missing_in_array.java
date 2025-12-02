@@ -16,3 +16,16 @@ Constraints:
 1 ≤ arr[i] ≤ arr.size() + 1
 
 */
+class Solution {
+    int missingNum(int arr[]) {
+        int n = arr.length + 1;
+        long total = (long)n * (n + 1) / 2;
+        
+        long sum = 0;
+        for (int x : arr) {
+            sum += x;
+        }
+        
+        return (int)(total - sum);
+    }
+}
