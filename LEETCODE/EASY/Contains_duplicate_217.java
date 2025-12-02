@@ -35,6 +35,9 @@ Constraints:
 1 <= nums.length <= 105
 -109 <= nums[i] <= 109
 */
+
+import java.util.HashSet;
+
 class Solution {
     public boolean containsDuplicate(int[] nums) {
         HashSet<Integer> set = new HashSet<>();
