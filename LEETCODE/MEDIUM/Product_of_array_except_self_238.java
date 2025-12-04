@@ -22,7 +22,7 @@ Constraints:
 -30 <= nums[i] <= 30
 The input is generated such that answer[i] is guaranteed to fit in a 32-bit integer.
 */
-public class Solution {
+public class Product_of_array_except_self_238 {
     public int[] productExceptSelf(int[] nums) {
         int n = nums.length;
         int[] res = new int[n];
