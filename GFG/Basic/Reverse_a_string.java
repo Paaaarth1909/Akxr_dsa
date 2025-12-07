@@ -1,3 +1,5 @@
+package GFG.Basic;
+
 /* You are given a string s, and your task is to reverse the string.
 
 Examples:
