@@ -12,3 +12,8 @@ Constraints:
 1 ≤ n ≤ 104
 
 */
+class Solution {
+    public static int findSum(int n) {
+        return n * (n + 1) / 2;
+    }
+}
