@@ -33,3 +33,17 @@ numbers is sorted in non-decreasing order.
 -1000 <= target <= 1000
 The tests are generated such that there is exactly one solution.
 */
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        int l = 0, r = numbers.length - 1;
+        while (l < r) {
+            int sum = numbers[l] + numbers[r];
+            if (sum == target) return new int[]{l + 1, r + 1};
+            if (sum < target) l++;
+            else r--;
+        }
+        return new int[0];
+    }
+}
+
+   
