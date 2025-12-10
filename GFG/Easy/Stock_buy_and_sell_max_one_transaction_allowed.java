@@ -21,8 +21,6 @@ Constraint:
 
 */
 // User function Template for Java
-import java.util.ArrayList;
-import java.util.List;
 class Solution {
     public static int maximumProfit(int prices[]) {
         int minSoFar = prices[0];
