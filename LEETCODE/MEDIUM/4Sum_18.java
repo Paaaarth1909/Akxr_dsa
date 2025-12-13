@@ -23,6 +23,9 @@ Constraints:
 -109 <= nums[i] <= 109
 -109 <= target <= 109
 */
+
+import java.util.Arrays;
+
 class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
         Arrays.sort(nums);
