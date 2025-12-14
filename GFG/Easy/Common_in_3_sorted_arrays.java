@@ -18,3 +18,39 @@ Constraints:
 -105 <= arr1i , arr2i , 1arr3i <= 105
 
 */
+// User function Template for Java
+
+import java.util.*;
+
+class Solution {
+    public List<Integer> commonElements(List<Integer> arr1, List<Integer> arr2,
+                                        List<Integer> arr3) {
+
+        List<Integer> res = new ArrayList<>();
+        int i = 0, j = 0, k = 0;
+
+        while (i < arr1.size() && j < arr2.size() && k < arr3.size()) {
+
+            int a = arr1.get(i);
+            int b = arr2.get(j);
+            int c = arr3.get(k);
+
+            if (a == b && b == c) {
+                if (res.size() == 0 || res.get(res.size() - 1) != a)
+                    res.add(a);
+                i++;
+                j++;
+                k++;
+            }
+            else if (a < b) i++;
+            else if (b < c) j++;
+            else k++;
+        }
+
+        if (res.size() == 0) {
+            res.add(-1);
+        }
+
+        return res;
+    }
+}
