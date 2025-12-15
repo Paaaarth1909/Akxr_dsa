@@ -24,3 +24,20 @@ Constraints:
 -10 <= nums[i] <= 10
 The product of any subarray of nums is guaranteed to fit in a 32-bit integer.
 */
+class Solution {
+    public int maxProduct(int[] nums) {
+        int max = nums[0], min = nums[0], ans = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            int n = nums[i];
+            if (n < 0) {
+                int t = max;
+                max = min;
+                min = t;
+            }
+            max = Math.max(n, max * n);
+            min = Math.min(n, min * n);
+            ans = Math.max(ans, max);
+        }
+        return ans;
+    }
+}
