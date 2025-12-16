@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given a string s, the objective is to convert it into integer format without utilizing any built-in functions. Refer the below steps to know about atoi() function.
 
 Cases for atoi() conversion:
