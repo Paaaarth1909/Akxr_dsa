@@ -28,3 +28,20 @@ Constraints:
 piles.length <= h <= 109
 1 <= piles[i] <= 109
 */
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+        int l = 1, r = 0;
+        for (int p : piles) r = Math.max(r, p);
+
+        while (l < r) {
+            int m = l + (r - l) / 2;
+            long time = 0;
+            for (int p : piles) {
+                time += (p + m - 1) / m;
+            }
+            if (time > h) l = m + 1;
+            else r = m;
+        }
+        return l;
+    }
+}
