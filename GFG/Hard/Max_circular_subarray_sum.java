@@ -16,7 +16,7 @@ Constraints:
 -104 ≤ arr[i] ≤ 104
 
 */
-int maxCircularSum(int* arr, int n) {
+int maxCircularSum(int[] arr, int n) {
     int total = 0;
     int curMax = 0, maxSum = arr[0];
     int curMin = 0, minSum = arr[0];
