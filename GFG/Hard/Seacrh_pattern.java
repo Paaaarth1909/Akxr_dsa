@@ -19,6 +19,9 @@ Constraints:
 Both the strings consist of lowercase English alphabets.
 
 */
+
+import java.util.ArrayList;
+
 class Solution {
     ArrayList<Integer> search(String pat, String txt) {
         ArrayList<Integer> res = new ArrayList<>();
