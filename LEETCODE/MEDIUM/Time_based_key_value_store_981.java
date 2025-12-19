@@ -35,6 +35,7 @@ At most 2 * 105 calls will be made to set and get.
 */
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 class TimeMap {
     HashMap<String, ArrayList<Integer>> time;
