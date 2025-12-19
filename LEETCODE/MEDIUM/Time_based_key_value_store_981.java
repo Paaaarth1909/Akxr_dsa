@@ -33,3 +33,35 @@ key and value consist of lowercase English letters and digits.
 All the timestamps timestamp of set are strictly increasing.
 At most 2 * 105 calls will be made to set and get.
 */
+class TimeMap {
+    HashMap<String, ArrayList<Integer>> time;
+    HashMap<String, ArrayList<String>> value;
+
+    public TimeMap() {
+        time = new HashMap<>();
+        value = new HashMap<>();
+    }
+
+    public void set(String key, String val, int timestamp) {
+        time.computeIfAbsent(key, k -> new ArrayList<>()).add(timestamp);
+        value.computeIfAbsent(key, k -> new ArrayList<>()).add(val);
+    }
+
+    public String get(String key, int timestamp) {
+        if (!time.containsKey(key)) return "";
+        ArrayList<Integer> t = time.get(key);
+        ArrayList<String> v = value.get(key);
+        int l = 0, r = t.size() - 1;
+        String res = "";
+        while (l <= r) {
+            int m = (l + r) / 2;
+            if (t.get(m) <= timestamp) {
+                res = v.get(m);
+                l = m + 1;
+            } else {
+                r = m - 1;
+            }
+        }
+        return res;
+    }
+}
