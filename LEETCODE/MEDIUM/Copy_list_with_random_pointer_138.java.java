@@ -38,7 +38,17 @@ Constraints:
 -104 <= Node.val <= 104
 Node.random is null or is pointing to some node in the linked list.
 */
+class Node {
+    int val;
+    Node next;
+    Node random;
 
+    Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
 
 class Solution {
     public Node copyRandomList(Node head) {
