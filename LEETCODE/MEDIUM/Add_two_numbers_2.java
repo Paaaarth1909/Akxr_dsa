@@ -37,7 +37,7 @@ It is guaranteed that the list represents a number that does not have leading ze
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-public class Solution {
+public class Add_two_numbers_2 {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
     	ListNode dummyHead = new ListNode(0);
     	ListNode p = l1, q= l2, curr = dummyHead;
