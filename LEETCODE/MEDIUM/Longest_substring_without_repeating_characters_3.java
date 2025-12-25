@@ -25,7 +25,10 @@ Constraints:
 0 <= s.length <= 5 * 104
 s consists of English letters, digits, symbols and spaces.
 */
-public class Solution {
+
+import java.util.Arrays;
+
+public class Longest_substring_without_repeating_characters_3 {
     public int lengthOfLongestSubstring(String s) {
     	int[] charMap = new int[256];
     	Arrays.fill(charMap, -1);
