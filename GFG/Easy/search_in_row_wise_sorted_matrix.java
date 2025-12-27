@@ -18,3 +18,25 @@ Constraints:
 1 <= x <= 105
 
 */
+class Solution {
+    public boolean searchRowMatrix(int[][] mat, int x) {
+        int n = mat.length;
+        int m = mat[0].length;
+
+        for (int i = 0; i < n; i++) {
+            if (x < mat[i][0] || x > mat[i][m - 1]) {
+                continue;
+            }
+
+            int lo = 0, hi = m - 1;
+            while (lo <= hi) {
+                int mid = lo + (hi - lo) / 2;
+                if (mat[i][mid] == x) return true;
+                else if (mat[i][mid] < x) lo = mid + 1;
+                else hi = mid - 1;
+            }
+        }
+
+        return false;
+    }
+}
