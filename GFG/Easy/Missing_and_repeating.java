@@ -16,3 +16,31 @@ Constraints:
 1 ≤ arr[i] ≤ n
 
  */
+import java.util.*;
+
+class Solution {
+    ArrayList<Integer> findTwoElement(int arr[]) {
+        ArrayList<Integer> res = new ArrayList<>();
+        int repeating = -1, missing = -1;
+
+        for (int i = 0; i < arr.length; i++) {
+            int idx = Math.abs(arr[i]) - 1;
+            if (arr[idx] < 0) {
+                repeating = Math.abs(arr[i]);
+            } else {
+                arr[idx] = -arr[idx];
+            }
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > 0) {
+                missing = i + 1;
+                break;
+            }
+        }
+
+        res.add(repeating);
+        res.add(missing);
+        return res;
+    }
+}
