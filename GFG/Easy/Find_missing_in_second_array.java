@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given two integer arrays a and b, the task is to find the numbers which are present in the first array a, but not present in the second array b.
 
 Note: Numbers to be returned should in order as they appear in array a.
