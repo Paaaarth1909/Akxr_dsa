@@ -35,3 +35,19 @@ Follow-up: If the string data type is mutable in your language, can you solve it
 
  
 */
+class Solution {
+    public String reverseWords(String s) {
+        if (s == null || s.length() == 0) {
+			return s;
+		}
+		s = s.trim();
+		String[] array = s.split("\\s+");
+		StringBuilder sb = new StringBuilder();
+		int len = array.length;
+		for (int i = len - 1; i > 0; i--) {
+			sb.append(array[i]).append(" ");
+		}
+		sb.append(array[0]);
+		return sb.toString();
+    }
+}
