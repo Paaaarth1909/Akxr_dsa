@@ -18,3 +18,21 @@ Constraints:
 0 ≤ a[i], b[i] ≤ 105
 
 */
+class Solution {
+    public ArrayList<Integer> intersect(int[] a, int[] b) {
+        HashSet<Integer> setA = new HashSet<>();
+        HashSet<Integer> result = new HashSet<>();
+
+        for (int x : a) {
+            setA.add(x);
+        }
+
+        for (int x : b) {
+            if (setA.contains(x)) {
+                result.add(x);
+            }
+        }
+
+        return new ArrayList<>(result);
+    }
+}
