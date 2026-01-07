@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given an array arr[] of distinct elements, which was initially sorted in ascending order but then rotated at some unknown pivot, the task is to find the index of a target key.  If the key is not present in the array, return -1.
 
 Examples :
