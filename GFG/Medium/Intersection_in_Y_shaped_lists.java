@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* You are given the heads of two non-empty singly linked lists, head1 and head2, that intersect at a certain point. Return that Node where these two linked lists intersect.
 
 Note: It is guaranteed that the intersected node always exists.
