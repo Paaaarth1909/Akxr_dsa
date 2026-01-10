@@ -84,9 +84,9 @@ Constraints:
 0 <= s.length <= 200
 s consists of English letters (lower-case and upper-case), digits (0-9), ' ', '+', '-', and '.'.
 */
-public class Solution {
+class Solution {
 	private static final int maxDiv10 = Integer.MAX_VALUE / 10;
-    public int myAtoi(String str) {
+	public int myAtoi(String str) {
     	int i = 0, n = str.length();
 		while (i < n && Character.isWhitespace(str.charAt(i)))
 			i++;
