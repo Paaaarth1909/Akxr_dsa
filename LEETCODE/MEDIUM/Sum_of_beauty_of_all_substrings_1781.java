@@ -1,3 +1,5 @@
+package LEETCODE.MEDIUM;
+
 /* The beauty of a string is the difference in frequencies between the most frequent and least frequent characters.
 
 For example, the beauty of "abaacc" is 3 - 1 = 2.
@@ -22,3 +24,25 @@ Constraints:
 s consists of only lowercase English letters.
  
 */
+class Solution {
+    public int beautySum(String s) {
+        int n = s.length();
+        int ans = 0;
+
+        for (int i = 0; i < n; i++) {
+            int[] freq = new int[26];
+            for (int j = i; j < n; j++) {
+                freq[s.charAt(j) - 'a']++;
+                int max = 0, min = Integer.MAX_VALUE;
+                for (int f : freq) {
+                    if (f > 0) {
+                        max = Math.max(max, f);
+                        min = Math.min(min, f);
+                    }
+                }
+                ans += max - min;
+            }
+        }
+        return ans;
+    }
+}
