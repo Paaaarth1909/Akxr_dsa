@@ -28,6 +28,7 @@ Constraints:
 class Node {
     int data;
     Node next;
+    public Node bottom;
 
     Node(int x) {
         data = x;
