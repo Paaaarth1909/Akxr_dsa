@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* You are given a string s consisting of lowercase characters and an integer k, You have to count all possible substrings that have exactly k distinct characters.
 
 Examples :
