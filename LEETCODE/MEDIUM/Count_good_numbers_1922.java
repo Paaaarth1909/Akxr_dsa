@@ -26,3 +26,24 @@ Constraints:
 
 1 <= n <= 1015
 */
+class Solution {
+    static final long MOD = 1000000007;
+
+    public int countGoodNumbers(long n) {
+        long evenPos = (n + 1) / 2;
+        long oddPos = n / 2;
+        long res = (pow(5, evenPos) * pow(4, oddPos)) % MOD;
+        return (int) res;
+    }
+
+    long pow(long base, long exp) {
+        long res = 1;
+        base %= MOD;
+        while (exp > 0) {
+            if ((exp & 1) == 1) res = (res * base) % MOD;
+            base = (base * base) % MOD;
+            exp >>= 1;
+        }
+        return res;
+    }
+}
