@@ -1,3 +1,5 @@
+package GFG.Basic;
+
 /* Given an array arr, rotate the array by one position in clockwise direction.
 
 Examples:
@@ -13,3 +15,17 @@ Constraints:
 0<=arr[i]<=105
 
 */
+class Solution {
+    public void rotate(int[] arr) {
+        int n = arr.length;
+        if (n <= 1) return;
+
+        int last = arr[n - 1];
+
+        for (int i = n - 1; i > 0; i--) {
+            arr[i] = arr[i - 1];
+        }
+
+        arr[0] = last;
+    }
+}
