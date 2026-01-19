@@ -17,6 +17,9 @@ Constraints:
 1 <= n <= 8
  
 */
+
+import java.util.List;
+
 class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> res = new ArrayList<>();
