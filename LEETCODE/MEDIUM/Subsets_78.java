@@ -20,3 +20,23 @@ Constraints:
 -10 <= nums[i] <= 10
 All the numbers of nums are unique.
 */
+
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        backtrack(0, nums, new ArrayList<>(), res);
+        return res;
+    }
+
+    void backtrack(int i, int[] nums, List<Integer> cur, List<List<Integer>> res) {
+        res.add(new ArrayList<>(cur));
+        for (int j = i; j < nums.length; j++) {
+            cur.add(nums[j]);
+            backtrack(j + 1, nums, cur, res);
+            cur.remove(cur.size() - 1);
+        }
+    }
+}
