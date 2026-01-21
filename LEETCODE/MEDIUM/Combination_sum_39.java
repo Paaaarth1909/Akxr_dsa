@@ -31,3 +31,28 @@ Constraints:
 All elements of candidates are distinct.
 1 <= target <= 40
 */
+
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        dfs(0, target, candidates, new ArrayList<>(), res);
+        return res;
+    }
+
+    void dfs(int i, int target, int[] c, List<Integer> cur, List<List<Integer>> res) {
+        if (target == 0) {
+            res.add(new ArrayList<>(cur));
+            return;
+        }
+        if (i == c.length || target < 0) return;
+
+        cur.add(c[i]);
+        dfs(i, target - c[i], c, cur, res);
+        cur.remove(cur.size() - 1);
+
+        dfs(i + 1, target, c, cur, res);
+    }
+}
