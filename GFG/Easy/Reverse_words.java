@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given a string s, reverse the string without reversing its individual words. Words are separated by dots(.).
 
 Note: The string may contain leading or trailing dots(.) or multiple dots(.) between two words. The returned string should only have a single dot(.) separating the words, and no extra dots should be included.
@@ -18,3 +20,20 @@ Constraints:
 String s contains only lowercase English alphabets and dots.
 
 */
+class Solution {
+    public String reverseWords(String s) {
+        String[] words = s.split("\\.+");
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = words.length - 1; i >= 0; i--) {
+            if (words[i].length() == 0) continue;
+
+            if (sb.length() > 0) {
+                sb.append(".");
+            }
+            sb.append(words[i]);
+        }
+
+        return sb.toString();
+    }
+}
