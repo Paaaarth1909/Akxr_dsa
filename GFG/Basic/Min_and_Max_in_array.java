@@ -1,3 +1,5 @@
+package GFG.Basic;
+
 /* Given an array arr[]. Your task is to find the minimum and maximum elements in the array.
 
 Examples:
@@ -13,3 +15,22 @@ Constraints:
 1 ≤ arr[i] ≤ 109
 
 */
+import java.util.*;
+
+class Solution {
+    public ArrayList<Integer> getMinMax(int[] arr) {
+        ArrayList<Integer> res = new ArrayList<>();
+
+        int min = arr[0];
+        int max = arr[0];
+
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] < min) min = arr[i];
+            if (arr[i] > max) max = arr[i];
+        }
+
+        res.add(min);
+        res.add(max);
+        return res;
+    }
+}
