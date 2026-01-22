@@ -32,3 +32,30 @@ Constraints:
 1 <= candidates[i] <= 50
 1 <= target <= 30
 */
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> res = new ArrayList<>();
+        dfs(0, target, candidates, new ArrayList<>(), res);
+        return res;
+    }
+
+    void dfs(int idx, int target, int[] a, List<Integer> cur, List<List<Integer>> res) {
+        if (target == 0) {
+            res.add(new ArrayList<>(cur));
+            return;
+        }
+        for (int i = idx; i < a.length; i++) {
+            if (i > idx && a[i] == a[i - 1]) continue;
+            if (a[i] > target) break;
+            cur.add(a[i]);
+            dfs(i + 1, target - a[i], a, cur, res);
+            cur.remove(cur.size() - 1);
+        }
+    }
+}
