@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given an array, arr[] construct a product array, res[] where each element in res[i] is the product of all elements in arr[] except arr[i]. Return this resultant array, res[].
 Note: Each element is res[] lies inside the 32-bit integer range.
 
@@ -19,3 +21,24 @@ Constraints:
 -100 <= arr[i] <= 100
 
 */
+class Solution {
+    public static int[] productExceptSelf(int arr[]) {
+        int n = arr.length;
+        int[] res = new int[n];
+
+        // Step 1: Left products
+        res[0] = 1;
+        for (int i = 1; i < n; i++) {
+            res[i] = res[i - 1] * arr[i - 1];
+        }
+
+        // Step 2: Right products
+        int rightProd = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            res[i] = res[i] * rightProd;
+            rightProd *= arr[i];
+        }
+
+        return res;
+    }
+}
