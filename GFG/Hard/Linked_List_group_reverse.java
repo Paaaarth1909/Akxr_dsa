@@ -29,6 +29,7 @@ class Node
     int data;
     Node next;
     public Object random;
+    public Object arb;
     Node(int key)
     {
         data = key;

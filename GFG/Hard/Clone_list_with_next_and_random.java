@@ -40,19 +40,21 @@ Constraints:
 0 ≤ node->data ≤ 1000
 
 */
-/*
+
 class Node {
     int data;
     Node next;
-    Node random;
+    Node arb;
+    
 
     Node(int x) {
         data = x;
         next = null;
-        random = null;
+        arb = null;
+        
     }
 }
-*/
+
 class Solution {
     public Node cloneLinkedList(Node head) {
         if (head == null) return null;
@@ -70,13 +72,14 @@ class Solution {
         // Step 2: Set random pointers of cloned nodes
         curr = head;
         while (curr != null) {
-            if (curr.random != null) {
-                curr.next.random = curr.random.next;
-            } else {
-                curr.next.random = null;
-            }
-            curr = curr.next.next;
-        }
+    if (curr.arb != null) {
+        curr.next.arb = curr.arb.next;
+    } else {
+        curr.next.arb = null;
+    }
+    curr = curr.next.next;
+}
+
 
         // Step 3: Separate original and cloned list
         curr = head;
