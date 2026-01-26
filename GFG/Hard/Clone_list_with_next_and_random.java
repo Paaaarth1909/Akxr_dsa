@@ -1,3 +1,5 @@
+package GFG.Hard;
+
 /* You are given a special linked list with n nodes where each node has two pointers a next pointer that points to the next node of the singly linked list, and a random pointer that points to the random node of the linked list.
 
 Construct a copy of this linked list. The copy should consist of the same number of new nodes, where each new node has the value corresponding to its original node. Both the next and random pointer of the new nodes should point to new nodes in the copied list, such that it also represent the same list state. None of the pointers in the new list should point to nodes in the original list.
@@ -38,3 +40,58 @@ Constraints:
 0 ≤ node->data ≤ 1000
 
 */
+/*
+class Node {
+    int data;
+    Node next;
+    Node random;
+
+    Node(int x) {
+        data = x;
+        next = null;
+        random = null;
+    }
+}
+*/
+class Solution {
+    public Node cloneLinkedList(Node head) {
+        if (head == null) return null;
+
+        Node curr = head;
+
+        // Step 1: Insert cloned nodes
+        while (curr != null) {
+            Node copy = new Node(curr.data);
+            copy.next = curr.next;
+            curr.next = copy;
+            curr = copy.next;
+        }
+
+        // Step 2: Set random pointers of cloned nodes
+        curr = head;
+        while (curr != null) {
+            if (curr.random != null) {
+                curr.next.random = curr.random.next;
+            } else {
+                curr.next.random = null;
+            }
+            curr = curr.next.next;
+        }
+
+        // Step 3: Separate original and cloned list
+        curr = head;
+        Node cloneHead = head.next;
+        Node cloneCurr = cloneHead;
+
+        while (curr != null) {
+            curr.next = curr.next.next;
+            if (cloneCurr.next != null) {
+                cloneCurr.next = cloneCurr.next.next;
+            }
+            curr = curr.next;
+            cloneCurr = cloneCurr.next;
+        }
+
+        return cloneHead;
+    }
+}

@@ -28,6 +28,7 @@ class Node
 {
     int data;
     Node next;
+    public Object random;
     Node(int key)
     {
         data = key;
