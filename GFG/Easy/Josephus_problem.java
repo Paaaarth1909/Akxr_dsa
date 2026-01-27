@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* You are playing a game with n people standing in a circle, numbered from 1 to n. Starting from person 1, every kth person is eliminated in a circular fashion. The process continues until only one person remains.
 Given integers n and k, return the position (1-based index) of the person who will survive.
 
@@ -14,3 +16,14 @@ Constraints:
 1 ≤ n, k ≤ 500
 
 */
+class Solution {
+    public int josephus(int n, int k) {
+        int res = 0; // J(1, k) = 0 (0-based)
+
+        for (int i = 2; i <= n; i++) {
+            res = (res + k) % i;
+        }
+
+        return res + 1; // convert to 1-based index
+    }
+}
