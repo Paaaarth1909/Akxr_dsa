@@ -27,3 +27,8 @@ Constraints:
 
 Follow up: Could you solve it without loops/recursion?
 */
+class Solution {
+    public boolean isPowerOfTwo(int n) {
+        return n > 0 && (n & (n - 1)) == 0;
+    }
+}
