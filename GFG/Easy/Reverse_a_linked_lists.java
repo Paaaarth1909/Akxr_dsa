@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* You are given the head of a singly linked list. You have to reverse the linked list and return the head of the reversed list.
 
 Examples:
@@ -22,3 +24,30 @@ Constraints:
 1 ≤ node->data ≤ 105
 
 */
+/*
+class Node {
+    int data;
+    Node next;
+
+    Node(int x) {
+        data = x;
+        next = null;
+    }
+}
+*/
+
+class Solution {
+    Node reverseList(Node head) {
+        Node prev = null;
+        Node curr = head;
+
+        while (curr != null) {
+            Node next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        return prev;
+    }
+}
