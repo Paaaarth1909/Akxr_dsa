@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* You are given the head of a linked list, You have to return the value of the middle node of the linked list.
 
 If the number of nodes is odd, return the middle node value.
@@ -18,3 +20,27 @@ Constraints:
 1 ≤ no. of nodes ≤ 105
 1 ≤ node->data ≤ 105
 */
+/*
+class Node {
+    int data;
+    Node next;
+
+    Node(int x) {
+        data = x;
+        next = null;
+    }
+} */
+
+class Solution {
+    int getMiddle(Node head) {
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow.data;
+    }
+}
