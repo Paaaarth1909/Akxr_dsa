@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given a singly linked list. The task is to remove duplicates (nodes with duplicate values) from the given list (if it exists).
 Note: Try not to use extra space. The nodes are arranged in a sorted way.
 
@@ -20,3 +22,31 @@ Constraints:
 1 <= Number of nodes, data of nodes <= 105 
 
 */
+/*
+class Node
+    {
+        int data;
+        Node next;
+        Node(int d) {data = d; next = null; }
+    }
+*/
+
+class Solution {
+    // Function to remove duplicates from sorted linked list.
+    Node removeDuplicates(Node head) {
+        if (head == null) return null;
+
+        Node curr = head;
+
+        while (curr != null && curr.next != null) {
+            if (curr.data == curr.next.data) {
+                // skip duplicate node
+                curr.next = curr.next.next;
+            } else {
+                curr = curr.next;
+            }
+        }
+
+        return head;
+    }
+}
