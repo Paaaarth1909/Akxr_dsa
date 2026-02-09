@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given an array arr of 0s and 1s. Find and return the length of the longest subarray with equal number of 0s and 1s.
 
 Examples:
@@ -16,3 +18,29 @@ Constraints:
 0 <= arr[i] <= 1
 
 */
+import java.util.*;
+
+class Solution {
+    public int maxLen(int[] arr) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int sum = 0;
+        int maxLen = 0;
+
+        // Prefix sum 0 at index -1 (handles subarrays starting at index 0)
+        map.put(0, -1);
+
+        for (int i = 0; i < arr.length; i++) {
+            // Convert 0 to -1
+            sum += (arr[i] == 0) ? -1 : 1;
+
+            if (map.containsKey(sum)) {
+                maxLen = Math.max(maxLen, i - map.get(sum));
+            } else {
+                // Store first occurrence only
+                map.put(sum, i);
+            }
+        }
+
+        return maxLen;
+    }
+}
