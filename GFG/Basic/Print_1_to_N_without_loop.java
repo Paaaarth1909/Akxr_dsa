@@ -1,3 +1,5 @@
+package GFG.Basic;
+
 /* You are given an integer n. You have  to print all numbers from 1 to n.
 Note: You must use recursion only, and print all numbers from 1 to n in a single line, separated by spaces.
 
@@ -13,3 +15,12 @@ Constraints:
 1 ≤ n ≤ 103
 
 */
+class Solution {
+    public void printNos(int n) {
+        if (n == 0) {
+            return;
+        }
+        printNos(n - 1);
+        System.out.print(n + " ");
+    }
+}
