@@ -22,3 +22,25 @@ Constraints:
 0 <= n <= 5 * 106
  
 */
+
+import java.util.Arrays;
+
+class Solution {
+    public int countPrimes(int n) {
+        boolean[] isPrime = new boolean[n];
+        int count = 0;
+        Arrays.fill(isPrime, true);
+        for (int i = 2; i < n; i++) {
+            if (i * i >= n)
+                break;
+            if (!isPrime[i])
+                continue;
+            for (int j = i * i; j < n; j += i)
+                isPrime[j] = false;
+        }
+        for (int i = 2; i < n; i++)
+            if (isPrime[i])
+                count++;
+        return count;
+    }
+}
