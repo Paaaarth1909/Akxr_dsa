@@ -1,3 +1,5 @@
+package GFG.Hard;
+
 /* You are given an integer array arr[], the task is to find the maximum of minimum values for every window size k where 1≤ k ≤ arr.size().
 
 For each window size k, consider all contiguous subarrays of length k, determine the minimum element in each subarray, and then take the maximum among all these minimums.
@@ -24,3 +26,53 @@ Constraints:
 1 ≤ arr[i] ≤ 106
 
 */
+import java.util.*;
+
+class Solution {
+    public ArrayList<Integer> maxOfMins(int[] arr) {
+        int n = arr.length;
+        int[] left = new int[n];
+        int[] right = new int[n];
+        Stack<Integer> stack = new Stack<>();
+
+        // Previous Smaller Element
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && arr[stack.peek()] >= arr[i]) {
+                stack.pop();
+            }
+            left[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(i);
+        }
+
+        stack.clear();
+
+        // Next Smaller Element
+        for (int i = n - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && arr[stack.peek()] >= arr[i]) {
+                stack.pop();
+            }
+            right[i] = stack.isEmpty() ? n : stack.peek();
+            stack.push(i);
+        }
+
+        int[] ans = new int[n + 1];
+
+        // Fill answer for each window length
+        for (int i = 0; i < n; i++) {
+            int len = right[i] - left[i] - 1;
+            ans[len] = Math.max(ans[len], arr[i]);
+        }
+
+        // Fill remaining empty entries
+        for (int i = n - 1; i >= 1; i--) {
+            ans[i] = Math.max(ans[i], ans[i + 1]);
+        }
+
+        ArrayList<Integer> result = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            result.add(ans[i]);
+        }
+
+        return result;
+    }
+}
