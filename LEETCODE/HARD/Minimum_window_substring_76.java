@@ -29,3 +29,29 @@ n == t.length
 1 <= m, n <= 105
 s and t consist of uppercase and lowercase English letters.
 */
+class Solution {
+    public String minWindow(String s, String t) {
+        if (t.length() > s.length()) return "";
+
+        int[] need = new int[128];
+        for (char c : t.toCharArray()) need[c]++;
+
+        int l = 0, count = t.length();
+        int minLen = Integer.MAX_VALUE, start = 0;
+
+        for (int r = 0; r < s.length(); r++) {
+            if (need[s.charAt(r)]-- > 0) count--;
+
+            while (count == 0) {
+                if (r - l + 1 < minLen) {
+                    minLen = r - l + 1;
+                    start = l;
+                }
+                if (need[s.charAt(l)]++ == 0) count++;
+                l++;
+            }
+        }
+
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
+    }
+}
