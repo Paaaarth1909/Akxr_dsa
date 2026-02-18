@@ -1,3 +1,5 @@
+package GFG.Basic;
+
 /* You are given a sorted array arr[] that may contain duplicate elements. Your task is to find the index of the last occurrence of any duplicate element and return the index along with the value of that element. If no duplicate element is found, return [-1, -1].
 
 Examples :
@@ -13,3 +15,16 @@ Constraints:
 1 ≤ arr[i] ≤ 106
 
 */
+class Solution {
+    public int[] dupLastIndex(int[] arr) {
+        int n = arr.length;
+
+        for (int i = n - 1; i > 0; i--) {
+            if (arr[i] == arr[i - 1]) {
+                return new int[]{i, arr[i]};
+            }
+        }
+
+        return new int[]{-1, -1};
+    }
+}
