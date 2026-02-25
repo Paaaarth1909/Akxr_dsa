@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Implement a class SpecialStack that supports following operations:
 
 push(x) – Insert an integer x into the stack.
@@ -40,3 +42,48 @@ Constraints:
 0 ≤ values on the stack ≤ 109
 
 */
+import java.util.*;
+
+class SpecialStack {
+    
+    Stack<Integer> stack;
+    Stack<Integer> minStack;
+
+    public SpecialStack() {
+        stack = new Stack<>();
+        minStack = new Stack<>();
+    }
+
+    public void push(int x) {
+        stack.push(x);
+        
+        // Update min stack
+        if (minStack.isEmpty() || x <= minStack.peek()) {
+            minStack.push(x);
+        }
+    }
+
+    public void pop() {
+        if (stack.isEmpty()) return;
+        
+        int removed = stack.pop();
+        
+        if (!minStack.isEmpty() && removed == minStack.peek()) {
+            minStack.pop();
+        }
+    }
+
+    public int peek() {
+        if (stack.isEmpty()) return -1;
+        return stack.peek();
+    }
+
+    boolean isEmpty() {
+        return stack.isEmpty();
+    }
+
+    public int getMin() {
+        if (minStack.isEmpty()) return -1;
+        return minStack.peek();
+    }
+}
