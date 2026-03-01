@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given an encoded string s, decode it by expanding the pattern k[substring], where the substring inside brackets is written k times. k is guaranteed to be a positive integer, and encodedString contains only lowercase english alphabets. Return the final decoded string.
 
 Note: The test cases are generated so that the length of the output string will never exceed 105 .
@@ -18,3 +20,43 @@ Constraints:
 1 ≤ k ≤ 100
 
 */
+import java.util.*;
+
+class Solution {
+    static String decodeString(String s) {
+        
+        Stack<Integer> countStack = new Stack<>();
+        Stack<StringBuilder> stringStack = new Stack<>();
+        
+        StringBuilder current = new StringBuilder();
+        int num = 0;
+        
+        for (char ch : s.toCharArray()) {
+            
+            if (Character.isDigit(ch)) {
+                num = num * 10 + (ch - '0');  // Handle multi-digit numbers
+            }
+            else if (ch == '[') {
+                countStack.push(num);
+                stringStack.push(current);
+                num = 0;
+                current = new StringBuilder();
+            }
+            else if (ch == ']') {
+                int repeat = countStack.pop();
+                StringBuilder prev = stringStack.pop();
+                
+                for (int i = 0; i < repeat; i++) {
+                    prev.append(current);
+                }
+                
+                current = prev;
+            }
+            else {
+                current.append(ch);
+            }
+        }
+        
+        return current.toString();
+    }
+}
