@@ -1,3 +1,5 @@
+package GFG.Basic;
+
 /* Given an array arr of integers, the task is to count the number of elements of the array which are Fibonacci numbers
 
 Examples:
@@ -16,3 +18,32 @@ Constraints:
 1 ≤ arr[i] ≤ 105
 
 */
+class Solution {
+    
+    // Function to check perfect square
+    private boolean isPerfectSquare(long num) {
+        long sqrt = (long)Math.sqrt(num);
+        return sqrt * sqrt == num;
+    }
+    
+    // Function to check Fibonacci number
+    private boolean isFibonacci(long n) {
+        long val1 = 5 * n * n + 4;
+        long val2 = 5 * n * n - 4;
+        
+        return isPerfectSquare(val1) || isPerfectSquare(val2);
+    }
+    
+    public int countFibonacciNumbers(long[] arr) {
+        
+        int count = 0;
+        
+        for (long num : arr) {
+            if (isFibonacci(num)) {
+                count++;
+            }
+        }
+        
+        return count;
+    }
+}
