@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given a string s, return the lexicographically largest string that can be obtained by swapping at most one pair of characters in s.
 
 Examples:
@@ -13,3 +15,36 @@ Constraints:
 '0' ≤ s[i] ≤ '9'
 
 */
+class Solution {
+    public String largestSwap(String s) {
+        
+        char[] arr = s.toCharArray();
+        int n = arr.length;
+        
+        int[] last = new int[10];
+        
+        // Store last occurrence of each digit
+        for(int i = 0; i < n; i++) {
+            last[arr[i] - '0'] = i;
+        }
+        
+        for(int i = 0; i < n; i++) {
+            
+            // Check larger digits from 9 down to current+1
+            for(int d = 9; d > arr[i] - '0'; d--) {
+                
+                if(last[d] > i) {
+                    
+                    // swap
+                    char temp = arr[i];
+                    arr[i] = arr[last[d]];
+                    arr[last[d]] = temp;
+                    
+                    return new String(arr);
+                }
+            }
+        }
+        
+        return s;
+    }
+}
