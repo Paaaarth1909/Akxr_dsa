@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* You are given an integer array arr[ ]. Your task is to count the number of subarrays where the first element is the minimum element of that subarray.
 
 Note: A subarray is valid if its first element is not greater than any other element in that subarray.
@@ -20,3 +22,37 @@ Constraints:
 1 ≤ arr[i] ≤ 105
 
 */
+import java.util.*;
+
+class Solution {
+    public int countSubarrays(int[] arr) {
+        
+        int n = arr.length;
+        int[] nextSmaller = new int[n];
+        Stack<Integer> stack = new Stack<>();
+        
+        // Find next smaller element index
+        for(int i = n - 1; i >= 0; i--) {
+            
+            while(!stack.isEmpty() && arr[stack.peek()] >= arr[i]) {
+                stack.pop();
+            }
+            
+            if(stack.isEmpty()) {
+                nextSmaller[i] = n;
+            } else {
+                nextSmaller[i] = stack.peek();
+            }
+            
+            stack.push(i);
+        }
+        
+        int result = 0;
+        
+        for(int i = 0; i < n; i++) {
+            result += nextSmaller[i] - i;
+        }
+        
+        return result;
+    }
+}
