@@ -19,3 +19,8 @@ Constraints:
 s[i]​​​​ is either '0' or '1'.
 s[0] is '1'. 
 */
+class Solution {
+    public boolean checkOnesSegment(String s) {
+        return !s.contains("01");
+    }
+}
