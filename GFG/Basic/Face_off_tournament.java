@@ -1,3 +1,5 @@
+package GFG.Basic;
+
 /* Ram and Rohan are participating in a tournament where they must compete against contenders whose strengths are given in an array arr[]. Ram's strength is m, and Rohan's strength is n. They take turns competing against the contenders, with Ram always going first. A contender is defeated if their strength is an exact multiple of either Ram's or Rohan's strength. Once defeated, a contender cannot compete again.
 
 Determine who wins more matches: Ram or Rohan. If both win the same number of matches, declare both as winners.
@@ -19,3 +21,24 @@ Constraints:
 1 ≤ arr[i] ≤ 106
 
 */
+class Solution {
+    public String winner(int[] arr, int m, int n) {
+        
+        int ram = 0, rohan = 0;
+        
+        for(int x : arr){
+            
+            if(x % m == 0){
+                ram++;
+            }
+            else if(x % n == 0){
+                rohan++;
+            }
+        }
+        
+        if(ram > rohan) return "Ram";
+        if(rohan > ram) return "Rohan";
+        
+        return "Both";
+    }
+}
