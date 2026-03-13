@@ -32,3 +32,37 @@ Constraints:
 1 <= s.length <= 105
 s[i] is either '0' or '1'.
 */
+class Solution {
+    public int minFlips(String s) {
+        int n = s.length();
+        String t = s + s;
+
+        int diff1 = 0, diff2 = 0;
+        int res = Integer.MAX_VALUE;
+        int left = 0;
+
+        for (int right = 0; right < t.length(); right++) {
+            char e1 = (right % 2 == 0) ? '0' : '1';
+            char e2 = (right % 2 == 0) ? '1' : '0';
+
+            if (t.charAt(right) != e1) diff1++;
+            if (t.charAt(right) != e2) diff2++;
+
+            if (right - left + 1 > n) {
+                char le1 = (left % 2 == 0) ? '0' : '1';
+                char le2 = (left % 2 == 0) ? '1' : '0';
+
+                if (t.charAt(left) != le1) diff1--;
+                if (t.charAt(left) != le2) diff2--;
+
+                left++;
+            }
+
+            if (right - left + 1 == n) {
+                res = Math.min(res, Math.min(diff1, diff2));
+            }
+        }
+
+        return res;
+    }
+}
