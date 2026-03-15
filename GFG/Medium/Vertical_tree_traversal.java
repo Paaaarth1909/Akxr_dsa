@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given the root of a Binary Tree, find the vertical traversal of the tree starting from the leftmost level to the rightmost level.
 
 Note: If there are multiple nodes passing through a vertical line, then they should be printed as they appear in level order traversal of the tree.
@@ -18,3 +20,66 @@ Constraints:
 1 ≤ node->data ≤ 105
 
 */
+import java.util.*;
+
+
+class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+
+
+
+class Solution {
+
+    class Pair {
+        Node node;
+        int hd;
+
+        Pair(Node node, int hd) {
+            this.node = node;
+            this.hd = hd;
+        }
+    }
+
+    public ArrayList<ArrayList<Integer>> verticalOrder(Node root) {
+
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+
+        if (root == null) return result;
+
+        TreeMap<Integer, ArrayList<Integer>> map = new TreeMap<>();
+        Queue<Pair> q = new LinkedList<>();
+
+        q.add(new Pair(root, 0));
+
+        while (!q.isEmpty()) {
+
+            Pair curr = q.poll();
+            Node node = curr.node;
+            int hd = curr.hd;
+
+            map.putIfAbsent(hd, new ArrayList<>());
+            map.get(hd).add(node.data);
+
+            if (node.left != null)
+                q.add(new Pair(node.left, hd - 1));
+
+            if (node.right != null)
+                q.add(new Pair(node.right, hd + 1));
+        }
+
+        for (ArrayList<Integer> list : map.values()) {
+            result.add(list);
+        }
+
+        return result;
+    }
+}
