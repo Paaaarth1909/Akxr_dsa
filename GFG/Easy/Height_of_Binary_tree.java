@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given the root of a binary tree, your task is to find the maximum depth of the tree.
 
 Note: The maximum depth or height of the tree is the number of edges in the tree from the root to the deepest node.
@@ -17,3 +19,28 @@ Constraints:
 0 ≤ node->data ≤ 105
 
 */
+
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int val)
+    {
+        data = val;
+        left = right = null;
+    }
+}
+
+
+class Solution {
+    public int height(Node root) {
+        
+        if(root == null)
+            return -1;
+        
+        int leftHeight = height(root.left);
+        int rightHeight = height(root.right);
+        
+        return 1 + Math.max(leftHeight, rightHeight);
+    }
+}
