@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given the root of a binary tree, convert the binary tree to its Mirror tree.
 
 Note: Mirror of a Binary Tree T is another Binary Tree M(T) with left and right children of all non-leaf nodes interchanged.
@@ -19,3 +21,19 @@ Constraints:
 1 ≤ node->data ≤ 105
 
 */
+class Solution {
+    void mirror(Node root) {
+        
+        if(root == null)
+            return;
+        
+        // swap children
+        Node temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        
+        // recurse
+        mirror(root.left);
+        mirror(root.right);
+    }
+}
