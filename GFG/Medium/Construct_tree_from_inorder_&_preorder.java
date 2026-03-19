@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given two arrays representing the inorder and preorder traversals of a binary tree, your task is to construct the binary tree and return its root.
 
 Note: The inorder and preorder traversals contain unique values, and every value present in the preorder traversal is also found in the inorder traversal.
@@ -18,3 +20,54 @@ Constraints:
 Both the inorder and preorder arrays contain unique values.
 
 */
+import java.util.*;
+
+
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int val) {
+        data = val;
+        left = right = null;
+    }
+}
+
+
+
+class Solution {
+
+    static int preIndex = 0;
+    static HashMap<Integer, Integer> map;
+
+    public static Node buildTree(int inorder[], int preorder[]) {
+        
+        map = new HashMap<>();
+        preIndex = 0;
+        
+        // store inorder indices
+        for(int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+        
+        return build(preorder, 0, inorder.length - 1);
+    }
+
+    static Node build(int[] preorder, int inStart, int inEnd) {
+        
+        if(inStart > inEnd)
+            return null;
+        
+        // root from preorder
+        int rootVal = preorder[preIndex++];
+        Node root = new Node(rootVal);
+        
+        int inIndex = map.get(rootVal);
+        
+        // build left and right
+        root.left = build(preorder, inStart, inIndex - 1);
+        root.right = build(preorder, inIndex + 1, inEnd);
+        
+        return root;
+    }
+}
