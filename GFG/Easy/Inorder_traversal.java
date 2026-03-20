@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given a root of a Binary Tree, your task is to return its Inorder Traversal.
 
 Note: An inorder traversal first visits the left child (including its entire subtree), then visits the node, and finally visits the right child (including its entire subtree).
@@ -17,3 +19,24 @@ Constraints:
 0 ≤ node->data ≤ 105
 
 */
+import java.util.*;
+
+class Solution {
+    
+    public ArrayList<Integer> inOrder(Node root) {
+        
+        ArrayList<Integer> result = new ArrayList<>();
+        inorder(root, result);
+        return result;
+    }
+    
+    void inorder(Node node, ArrayList<Integer> result){
+        
+        if(node == null)
+            return;
+        
+        inorder(node.left, result);
+        result.add(node.data);
+        inorder(node.right, result);
+    }
+}
