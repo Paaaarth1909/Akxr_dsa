@@ -43,3 +43,34 @@ The number of nodes in the tree is in the range [0, 100].
  
 
 */
+
+import java.util.ArrayList;
+import java.util.List;
+public class Binary_tree_inorder_traversal_94 {
+      int val;
+      Binary_tree_inorder_traversal_94 left;
+      Binary_tree_inorder_traversal_94 right;
+      Binary_tree_inorder_traversal_94() {}
+      Binary_tree_inorder_traversal_94(int val) { this.val = val; }
+      Binary_tree_inorder_traversal_94(int val, Binary_tree_inorder_traversal_94 left, Binary_tree_inorder_traversal_94 right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }
+
+class Solution {
+    public List<Integer> inorderTraversal(Binary_tree_inorder_traversal_94 root) {
+        List<Integer> res = new ArrayList<>();
+        inorder(root, res);
+        return res;
+    }
+
+    private void inorder(Binary_tree_inorder_traversal_94 node, List<Integer> res) {
+        if (node == null) return;
+
+        inorder(node.left, res);
+        res.add(node.val);
+        inorder(node.right, res);
+    }
+}
