@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given a root of a Binary Tree, return its boundary traversal in the following order:
 
 Left Boundary: Nodes from the root to the leftmost non-leaf node, preferring the left child over the right and excluding leaves.
@@ -26,3 +28,92 @@ Constraints:
 1 ≤ number of nodes ≤ 105
 1 ≤ node->data ≤ 105 
 */
+import java.util.*;
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int val) {
+        this.data = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+class Solution {
+
+    ArrayList<Integer> boundaryTraversal(Node root) {
+        
+        ArrayList<Integer> res = new ArrayList<>();
+        
+        if(root == null) return res;
+        
+        // root (only if not leaf)
+        if(!isLeaf(root))
+            res.add(root.data);
+        
+        // left boundary
+        addLeftBoundary(root, res);
+        
+        // leaf nodes
+        addLeaves(root, res);
+        
+        // right boundary
+        addRightBoundary(root, res);
+        
+        return res;
+    }
+    
+    boolean isLeaf(Node node){
+        return node.left == null && node.right == null;
+    }
+    
+    void addLeftBoundary(Node node, ArrayList<Integer> res){
+        
+        Node curr = node.left;
+        
+        while(curr != null){
+            
+            if(!isLeaf(curr))
+                res.add(curr.data);
+            
+            if(curr.left != null)
+                curr = curr.left;
+            else
+                curr = curr.right;
+        }
+    }
+    
+    void addLeaves(Node node, ArrayList<Integer> res){
+        
+        if(node == null) return;
+        
+        if(isLeaf(node)){
+            res.add(node.data);
+            return;
+        }
+        
+        addLeaves(node.left, res);
+        addLeaves(node.right, res);
+    }
+    
+    void addRightBoundary(Node node, ArrayList<Integer> res){
+        
+        Node curr = node.right;
+        Stack<Integer> stack = new Stack<>();
+        
+        while(curr != null){
+            
+            if(!isLeaf(curr))
+                stack.push(curr.data);
+            
+            if(curr.right != null)
+                curr = curr.right;
+            else
+                curr = curr.left;
+        }
+        
+        while(!stack.isEmpty()){
+            res.add(stack.pop());
+        }
+    }
+}
