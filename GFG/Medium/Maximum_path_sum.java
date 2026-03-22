@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given the root of a binary tree, your task is to find the maximum path sum. The path may start and end at any node in the tree.
 
 Examples:
@@ -15,3 +17,38 @@ Constraints:
 -104 ≤ node->data ≤ 104
 
 */
+class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+class Solution {
+    
+    int maxSum = Integer.MIN_VALUE;
+    
+    int findMaxSum(Node root) {
+        dfs(root);
+        return maxSum;
+    }
+    
+    int dfs(Node node){
+        
+        if(node == null)
+            return 0;
+        
+        int left = Math.max(0, dfs(node.left));
+        int right = Math.max(0, dfs(node.right));
+        
+        // update global answer
+        maxSum = Math.max(maxSum, node.data + left + right);
+        
+        // return one side only
+        return node.data + Math.max(left, right);
+    }
+}
