@@ -1,3 +1,5 @@
+package LEETCODE.MEDIUM;
+
 /* Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
 
  
@@ -28,29 +30,27 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import javax.swing.tree.TreeNode;
 
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
+
+     public class Binary_tree_level_order_traversal_102 {
+      int val;
+      Binary_tree_level_order_traversal_102 left;
+      Binary_tree_level_order_traversal_102 right;
+      Binary_tree_level_order_traversal_102() {}
+      Binary_tree_level_order_traversal_102(int val) { this.val = val; }
+      Binary_tree_level_order_traversal_102(int val, Binary_tree_level_order_traversal_102 left, Binary_tree_level_order_traversal_102 right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }
+ 
 class Solution {
-    public List<List<Integer>> levelOrder(TreeNode root) {
+    public List<List<Integer>> levelOrder(Binary_tree_level_order_traversal_102 root) {
         List<List<Integer>> res = new ArrayList<>();
         if (root == null) return res;
 
-        Queue<TreeNode> q = new LinkedList<>();
+        Queue<Binary_tree_level_order_traversal_102> q = new LinkedList<>();
         q.offer(root);
 
         while (!q.isEmpty()) {
@@ -58,7 +58,7 @@ class Solution {
             List<Integer> level = new ArrayList<>();
 
             for (int i = 0; i < size; i++) {
-                TreeNode node = q.poll();
+                Binary_tree_level_order_traversal_102 node = q.poll();
                 level.add(node.val);
 
                 if (node.left != null) q.offer(node.left);
