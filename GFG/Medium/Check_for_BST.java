@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given the root of a binary tree. Check whether it is a BST or not.
 
 A BST is defined as follows:
@@ -30,3 +32,34 @@ Constraints:
 1 ≤ node->data ≤ 109
 
 */
+import java.util.*;
+
+class Solution {
+    
+    public boolean isBST(Node root) {
+        
+        Stack<Node> stack = new Stack<>();
+        Node curr = root;
+        Node prev = null;
+        
+        while(curr != null || !stack.isEmpty()){
+            
+            while(curr != null){
+                stack.push(curr);
+                curr = curr.left;
+            }
+            
+            curr = stack.pop();
+            
+            // check BST condition
+            if(prev != null && curr.data <= prev.data)
+                return false;
+            
+            prev = curr;
+            
+            curr = curr.right;
+        }
+        
+        return true;
+    }
+}
