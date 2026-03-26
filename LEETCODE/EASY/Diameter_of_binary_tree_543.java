@@ -23,3 +23,32 @@ Constraints:
 The number of nodes in the tree is in the range [1, 104].
 -100 <= Node.val <= 100
 */
+
+  public class Diameter_of_binary_tree_543 {
+      int val;
+      Diameter_of_binary_tree_543 left;
+      Diameter_of_binary_tree_543 right;
+      Diameter_of_binary_tree_543() {}
+      Diameter_of_binary_tree_543(int val) { this.val = val; }
+      Diameter_of_binary_tree_543(int val, Diameter_of_binary_tree_543 left, Diameter_of_binary_tree_543 right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }
+ 
+class Solution {
+    int ans;
+    public int diameterOfBinaryTree(Diameter_of_binary_tree_543 root) {
+        ans = 1;
+        depth(root);
+        return ans - 1;
+    }
+    public int depth(Diameter_of_binary_tree_543 node) {
+        if (node == null) return 0;
+        int L = depth(node.left);
+        int R = depth(node.right);
+        ans = Math.max(ans, L+R+1);
+        return Math.max(L, R) + 1;
+    }
+}
