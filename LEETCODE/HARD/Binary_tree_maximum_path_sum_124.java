@@ -26,30 +26,29 @@ The number of nodes in the tree is in the range [1, 3 * 104].
 -1000 <= Node.val <= 1000
  
 */
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
+
+  public class Binary_tree_maximum_path_sum_124 {
+      int val;
+      Binary_tree_maximum_path_sum_124 left;
+      Binary_tree_maximum_path_sum_124 right;
+      Binary_tree_maximum_path_sum_124() {}
+      Binary_tree_maximum_path_sum_124(int val) { this.val = val; }
+      Binary_tree_maximum_path_sum_124(int val, Binary_tree_maximum_path_sum_124 left, Binary_tree_maximum_path_sum_124 right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }
+
 class Solution {
     int max = Integer.MIN_VALUE;
 
-    public int maxPathSum(TreeNode root) {
+    public int maxPathSum(Binary_tree_maximum_path_sum_124 root) {
         dfs(root);
         return max;
     }
 
-    private int dfs(TreeNode node) {
+    private int dfs(Binary_tree_maximum_path_sum_124 node) {
         if (node == null) return 0;
 
         int left = Math.max(0, dfs(node.left));
