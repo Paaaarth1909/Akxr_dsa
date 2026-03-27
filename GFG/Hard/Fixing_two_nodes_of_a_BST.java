@@ -17,3 +17,57 @@ Constraints:
 1 ≤ Number of nodes ≤ 103
 
 */
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int val) {
+        this.data = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+class Solution {
+    
+    Node first = null, middle = null, last = null, prev = null;
+
+    void correctBST(Node root) {
+        
+        inorder(root);
+        
+        // fix swapped nodes
+        if(first != null && last != null){
+            int temp = first.data;
+            first.data = last.data;
+            last.data = temp;
+        }
+        else if(first != null && middle != null){
+            int temp = first.data;
+            first.data = middle.data;
+            middle.data = temp;
+        }
+    }
+    
+    void inorder(Node node){
+        
+        if(node == null) return;
+        
+        inorder(node.left);
+        
+        // detect violation
+        if(prev != null && node.data < prev.data){
+            
+            if(first == null){
+                first = prev;
+                middle = node;
+            }
+            else{
+                last = node;
+            }
+        }
+        
+        prev = node;
+        
+        inorder(node.right);
+    }
+}
