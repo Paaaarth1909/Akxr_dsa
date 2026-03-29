@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given an array arr[] and an integer diff, count the number of ways to partition the array into two subsets such that the difference between their sums is equal to diff.
 
 Note: A partition in the array means dividing an array into two subsets say S1 and S2 such that the union of S1 and S2 is equal to the original array and each element is present in only one of the subsets.
@@ -20,3 +22,31 @@ Constraint:
 0 ≤ arr[i] ≤ 6
 
 */
+class Solution {
+    public int countPartitions(int[] arr, int diff) {
+        
+        int totalSum = 0;
+        for(int num : arr) totalSum += num;
+        
+        // check validity
+        if((totalSum + diff) % 2 != 0) return 0;
+        
+        int target = (totalSum + diff) / 2;
+        
+        return countSubsets(arr, target);
+    }
+    
+    int countSubsets(int[] arr, int target){
+        
+        int[] dp = new int[target + 1];
+        dp[0] = 1;
+        
+        for(int num : arr){
+            for(int j = target; j >= num; j--){
+                dp[j] += dp[j - num];
+            }
+        }
+        
+        return dp[target];
+    }
+}
