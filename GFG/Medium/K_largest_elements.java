@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given an array arr[] of positive integers and an integer k, Your task is to return k largest elements in decreasing order. 
 
 Examples:
@@ -15,3 +17,30 @@ Constraints:
 1 ≤ k ≤ arr.size() ≤ 106
 1 ≤ arr[i] ≤ 106
 */
+import java.util.*;
+
+class Solution {
+    public ArrayList<Integer> kLargest(int[] arr, int k) {
+        
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        
+        for(int num : arr){
+            minHeap.add(num);
+            
+            if(minHeap.size() > k){
+                minHeap.poll(); // remove smallest
+            }
+        }
+        
+        ArrayList<Integer> res = new ArrayList<>();
+        
+        while(!minHeap.isEmpty()){
+            res.add(minHeap.poll());
+        }
+        
+        // sort in decreasing order
+        Collections.sort(res, Collections.reverseOrder());
+        
+        return res;
+    }
+}
