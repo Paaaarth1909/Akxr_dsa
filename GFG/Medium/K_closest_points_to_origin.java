@@ -30,48 +30,35 @@ Constraints:
 -3*104 ≤ xi, yi ≤ 3*104
 */
 import java.util.*;
+
 class Solution {
-    public static ArrayList<ArrayList<Integer>> kClosest(
-        ArrayList<ArrayList<Integer>> points, int K) {
+    public ArrayList<ArrayList<Integer>> kClosest(int[][] points, int k) {
         
-        PriorityQueue<ArrayList<Integer>> maxHeap = new PriorityQueue<>(
+        PriorityQueue<int[]> maxHeap = new PriorityQueue<>(
             (a, b) -> {
-                long d1 = 1L * a.get(0) * a.get(0) + 1L * a.get(1) * a.get(1);
-                long d2 = 1L * b.get(0) * b.get(0) + 1L * b.get(1) * b.get(1);
-                
-                if(d1 != d2)
-                    return Long.compare(d2, d1); // reverse (max heap)
-                
-                if(!a.get(0).equals(b.get(0)))
-                    return Integer.compare(b.get(0), a.get(0));
-                
-                return Integer.compare(b.get(1), a.get(1));
+                long d1 = 1L * a[0] * a[0] + 1L * a[1] * a[1];
+                long d2 = 1L * b[0] * b[0] + 1L * b[1] * b[1];
+                return Long.compare(d2, d1); // max heap
             }
         );
         
-        for(ArrayList<Integer> p : points){
+        for(int[] p : points){
             maxHeap.add(p);
             
-            if(maxHeap.size() > K){
-                maxHeap.poll();
+            if(maxHeap.size() > k){
+                maxHeap.poll(); // remove farthest
             }
         }
         
-        ArrayList<ArrayList<Integer>> res = new ArrayList<>(maxHeap);
+        ArrayList<ArrayList<Integer>> res = new ArrayList<>();
         
-        // FINAL SORT (required for output format)
-        Collections.sort(res, (a, b) -> {
-            long d1 = 1L * a.get(0) * a.get(0) + 1L * a.get(1) * a.get(1);
-            long d2 = 1L * b.get(0) * b.get(0) + 1L * b.get(1) * b.get(1);
-            
-            if(d1 != d2)
-                return Long.compare(d1, d2);
-            
-            if(!a.get(0).equals(b.get(0)))
-                return Integer.compare(a.get(0), b.get(0));
-            
-            return Integer.compare(a.get(1), b.get(1));
-        });
+        while(!maxHeap.isEmpty()){
+            int[] p = maxHeap.poll();
+            ArrayList<Integer> temp = new ArrayList<>();
+            temp.add(p[0]);
+            temp.add(p[1]);
+            res.add(temp);
+        }
         
         return res;
     }
