@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given a list of points on the 2-D plane and an integer K. The task is to find K closest points to the origin and print them.
 
 Note: The distance between two points on a plane is the Euclidean distance.You are require to prints the points in increasing order of their distance from the origin. If two points are at same distance from origin then print points in sorted order(First sort the coordinates according to the X-coordinate and in case X-coordinate is same, then sort  according to Y-coordinate).
@@ -42,3 +44,51 @@ Constraints:
 -103 <= (X,Y) <= 103
 
 */
+import java.util.*;
+
+class Solution {
+    public static ArrayList<ArrayList<Integer>> kClosest(
+        ArrayList<ArrayList<Integer>> points, int K) {
+        
+        PriorityQueue<ArrayList<Integer>> maxHeap = new PriorityQueue<>(
+            (a, b) -> {
+                long d1 = 1L * a.get(0) * a.get(0) + 1L * a.get(1) * a.get(1);
+                long d2 = 1L * b.get(0) * b.get(0) + 1L * b.get(1) * b.get(1);
+                
+                if(d1 != d2)
+                    return Long.compare(d2, d1); // reverse (max heap)
+                
+                if(!a.get(0).equals(b.get(0)))
+                    return Integer.compare(b.get(0), a.get(0));
+                
+                return Integer.compare(b.get(1), a.get(1));
+            }
+        );
+        
+        for(ArrayList<Integer> p : points){
+            maxHeap.add(p);
+            
+            if(maxHeap.size() > K){
+                maxHeap.poll();
+            }
+        }
+        
+        ArrayList<ArrayList<Integer>> res = new ArrayList<>(maxHeap);
+        
+        // FINAL SORT (required for output format)
+        Collections.sort(res, (a, b) -> {
+            long d1 = 1L * a.get(0) * a.get(0) + 1L * a.get(1) * a.get(1);
+            long d2 = 1L * b.get(0) * b.get(0) + 1L * b.get(1) * b.get(1);
+            
+            if(d1 != d2)
+                return Long.compare(d1, d2);
+            
+            if(!a.get(0).equals(b.get(0)))
+                return Integer.compare(a.get(0), b.get(0));
+            
+            return Integer.compare(a.get(1), b.get(1));
+        });
+        
+        return res;
+    }
+}
