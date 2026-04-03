@@ -23,3 +23,32 @@ The number of nodes in the subRoot tree is in the range [1, 1000].
 -104 <= root.val <= 104
 -104 <= subRoot.val <= 104
 */
+
+  public class Subtree_of_another_tree_572 {
+      int val;
+      Subtree_of_another_tree_572 left;
+      Subtree_of_another_tree_572 right;
+      Subtree_of_another_tree_572() {}
+      Subtree_of_another_tree_572(int val) { this.val = val; }
+      Subtree_of_another_tree_572(int val, Subtree_of_another_tree_572 left, Subtree_of_another_tree_572 right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }
+
+class Solution {
+    public boolean isSubtree(Subtree_of_another_tree_572 root, Subtree_of_another_tree_572 subRoot) {
+        if (root == null) return false;
+        if (isSame(root, subRoot)) return true;
+        return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+    }
+
+    private boolean isSame(Subtree_of_another_tree_572 a, Subtree_of_another_tree_572 b) {
+        if (a == null && b == null) return true;
+        if (a == null || b == null) return false;
+        if (a.val != b.val) return false;
+
+        return isSame(a.left, b.left) && isSame(a.right, b.right);
+    }
+}
