@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Give a n * n square matrix mat[][], return all the elements of its anti-diagonals from top to bottom.
 
 Examples :
@@ -18,3 +20,40 @@ Constraints:
 0 ≤ mat[i][j] ≤ 106
 
 */
+import java.util.*;
+
+class Solution {
+    static ArrayList<Integer> diagView(int mat[][]) {
+        
+        int n = mat.length;
+        ArrayList<Integer> res = new ArrayList<>();
+        
+        // start from top row
+        for(int col = 0; col < n; col++){
+            
+            int i = 0;
+            int j = col;
+            
+            while(i < n && j >= 0){
+                res.add(mat[i][j]);
+                i++;
+                j--;
+            }
+        }
+        
+        // start from last column (excluding first row)
+        for(int row = 1; row < n; row++){
+            
+            int i = row;
+            int j = n - 1;
+            
+            while(i < n && j >= 0){
+                res.add(mat[i][j]);
+                i++;
+                j--;
+            }
+        }
+        
+        return res;
+    }
+}
