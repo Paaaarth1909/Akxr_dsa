@@ -30,3 +30,26 @@ All Node.val are unique.
 p != q
 p and q will exist in the BST.
 */
+
+  public class Lowest_common_ancestor_of_a_BST_235 {
+      int val;
+      Lowest_common_ancestor_of_a_BST_235 left;
+      Lowest_common_ancestor_of_a_BST_235 right;
+      Lowest_common_ancestor_of_a_BST_235(int x) { val = x; }
+  }
+ 
+
+class Solution {
+    public Lowest_common_ancestor_of_a_BST_235 lowestCommonAncestor(Lowest_common_ancestor_of_a_BST_235 root, Lowest_common_ancestor_of_a_BST_235 p, Lowest_common_ancestor_of_a_BST_235 q) {
+        while (root != null) {
+            if (p.val < root.val && q.val < root.val) {
+                root = root.left;
+            } else if (p.val > root.val && q.val > root.val) {
+                root = root.right;
+            } else {
+                return root;
+            }
+        }
+        return null;
+    }
+}
