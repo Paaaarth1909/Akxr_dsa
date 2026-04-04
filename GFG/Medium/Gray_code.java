@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given a number n, generate bit patterns from 0 to 2n-1 such that successive patterns differ by one bit. 
 A Gray code sequence must begin with 0.
  
@@ -19,3 +21,30 @@ differs by one bit.
 Constraints :
 1 ≤ n ≤ 16
 */
+import java.util.*;
+
+class Solution {
+    public ArrayList<String> graycode(int n) {
+        
+        ArrayList<String> res = new ArrayList<>();
+        res.add("0");
+        res.add("1");
+        
+        for(int i = 2; i <= n; i++){
+            
+            int size = res.size();
+            
+            // add reversed with '1'
+            for(int j = size - 1; j >= 0; j--){
+                res.add("1" + res.get(j));
+            }
+            
+            // add '0' to existing
+            for(int j = 0; j < size; j++){
+                res.set(j, "0" + res.get(j));
+            }
+        }
+        
+        return res;
+    }
+}
