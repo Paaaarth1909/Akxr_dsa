@@ -42,3 +42,48 @@ The number of nodes in the tree is in the range [0, 100].
 -100 <= Node.val <= 100
  
 */
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
+public class Binary_tree_right_side_view_199 {
+      int val;
+      Binary_tree_right_side_view_199 left;
+      Binary_tree_right_side_view_199 right;
+      Binary_tree_right_side_view_199() {}
+      Binary_tree_right_side_view_199(int val) { this.val = val; }
+      Binary_tree_right_side_view_199(int val, Binary_tree_right_side_view_199 left, Binary_tree_right_side_view_199 right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }
+ 
+class Solution {
+    public List<Integer> rightSideView(Binary_tree_right_side_view_199 root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+
+        Queue<Binary_tree_right_side_view_199> q = new LinkedList<>();
+        q.offer(root);
+
+        while (!q.isEmpty()) {
+            int size = q.size();
+
+            for (int i = 0; i < size; i++) {
+                Binary_tree_right_side_view_199 node = q.poll();
+
+                if (i == size - 1) {
+                    res.add(node.val); // rightmost node
+                }
+
+                if (node.left != null) q.offer(node.left);
+                if (node.right != null) q.offer(node.right);
+            }
+        }
+
+        return res;
+    }
+}
