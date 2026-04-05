@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given an array of integers arr[] and an integer target. We need to build an expression out of arr[] by adding one of the symbols '+' or  '-' before each integer in arr[] and then concatenate all the integers. 
 For example : if arr[] = [2, 1], you can add a '+' before 2 and a '-' before 1 and concatenate them to build the expression "+2-1".
 Return the number of different expressions that can be built, which evaluates to target.
@@ -24,3 +26,32 @@ Constraints:
 -1000 ≤ target ≤ 1000
 
 */
+class Solution {
+    public int totalWays(int[] arr, int target) {
+        
+        int totalSum = 0;
+        for(int num : arr) totalSum += num;
+        
+        // edge cases
+        if((totalSum + target) % 2 != 0) return 0;
+        if(Math.abs(target) > totalSum) return 0;
+        
+        int s1 = (totalSum + target) / 2;
+        
+        return countSubsets(arr, s1);
+    }
+    
+    int countSubsets(int[] arr, int sum){
+        
+        int[] dp = new int[sum + 1];
+        dp[0] = 1;
+        
+        for(int num : arr){
+            for(int j = sum; j >= num; j--){
+                dp[j] += dp[j - num];
+            }
+        }
+        
+        return dp[sum];
+    }
+}
