@@ -34,3 +34,37 @@ Constraints:
 The number of nodes in the binary tree is in the range [1, 10^5].
 Each node's value is between [-10^4, 10^4].
 */
+
+  public class Count_good_nodes_in_binary_tree_1448 {
+      int val;
+      Count_good_nodes_in_binary_tree_1448 left;
+      Count_good_nodes_in_binary_tree_1448 right;
+      Count_good_nodes_in_binary_tree_1448() {}
+      Count_good_nodes_in_binary_tree_1448(int val) { this.val = val; }
+      Count_good_nodes_in_binary_tree_1448(int val, Count_good_nodes_in_binary_tree_1448 left, Count_good_nodes_in_binary_tree_1448 right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }
+
+class Solution {
+    public int goodNodes(Count_good_nodes_in_binary_tree_1448 root) {
+        return dfs(root, Integer.MIN_VALUE);
+    }
+
+    private int dfs(Count_good_nodes_in_binary_tree_1448 node, int maxSoFar) {
+        if (node == null) return 0;
+
+        int count = 0;
+        if (node.val >= maxSoFar) {
+            count = 1;
+            maxSoFar = node.val;
+        }
+
+        count += dfs(node.left, maxSoFar);
+        count += dfs(node.right, maxSoFar);
+
+        return count;
+    }
+}
