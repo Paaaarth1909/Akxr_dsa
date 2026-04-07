@@ -25,3 +25,31 @@ Constraints:
 The number of nodes in the tree is in the range [1, 104].
 -231 <= Node.val <= 231 - 1
 */
+
+  public class Validate_BST_98 {
+      int val;
+      Validate_BST_98 left;
+      Validate_BST_98 right;
+      Validate_BST_98() {}
+      Validate_BST_98(int val) { this.val = val; }
+      Validate_BST_98(int val, Validate_BST_98 left, Validate_BST_98 right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }
+ 
+class Solution {
+    public boolean isValidBST(Validate_BST_98 root) {
+        return validate(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean validate(Validate_BST_98 node, long min, long max) {
+        if (node == null) return true;
+
+        if (node.val <= min || node.val >= max) return false;
+
+        return validate(node.left, min, node.val) &&
+               validate(node.right, node.val, max);
+    }
+}
