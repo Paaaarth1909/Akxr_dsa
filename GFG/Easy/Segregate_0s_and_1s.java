@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given an array arr[] consisting of only 0's and 1's. Modify the array in-place to segregate 0s onto the left side and 1s onto the right side of the array.
 
 Examples :
@@ -13,3 +15,29 @@ Constraints:
 0 ≤ arr[i] ≤ 1
 
 */
+class Solution {
+    void segregate0and1(int[] arr) {
+        
+        int left = 0;
+        int right = arr.length - 1;
+        
+        while(left < right){
+            
+            if(arr[left] == 0){
+                left++;
+            }
+            else if(arr[right] == 1){
+                right--;
+            }
+            else{
+                // swap
+                int temp = arr[left];
+                arr[left] = arr[right];
+                arr[right] = temp;
+                
+                left++;
+                right--;
+            }
+        }
+    }
+}
