@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given two sorted arrays a[] and b[], where each array may contain duplicate elements, return the elements in the intersection of the two arrays in sorted order.
 
 Note: Intersection of two arrays can be defined as the set containing distinct common elements that are present in both of the arrays.
@@ -18,3 +20,35 @@ Constraints:
 -109 ≤ a[i], b[i] ≤ 109
 
 */
+import java.util.*;
+
+class Solution {
+    ArrayList<Integer> intersection(int[] a, int[] b) {
+        
+        ArrayList<Integer> res = new ArrayList<>();
+        
+        int i = 0, j = 0;
+        
+        while(i < a.length && j < b.length){
+            
+            if(a[i] == b[j]){
+                
+                // add only if not duplicate
+                if(res.size() == 0 || res.get(res.size() - 1) != a[i]){
+                    res.add(a[i]);
+                }
+                
+                i++;
+                j++;
+            }
+            else if(a[i] < b[j]){
+                i++;
+            }
+            else{
+                j++;
+            }
+        }
+        
+        return res;
+    }
+}
