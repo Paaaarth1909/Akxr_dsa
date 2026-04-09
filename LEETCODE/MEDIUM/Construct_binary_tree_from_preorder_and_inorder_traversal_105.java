@@ -23,3 +23,46 @@ Each value of inorder also appears in preorder.
 preorder is guaranteed to be the preorder traversal of the tree.
 inorder is guaranteed to be the inorder traversal of the tree.
 */
+
+import java.util.HashMap;
+import java.util.Map;
+
+
+  public class Construct_binary_tree_from_preorder_and_inorder_traversal_105 {
+      int val;
+      Construct_binary_tree_from_preorder_and_inorder_traversal_105 left;
+      Construct_binary_tree_from_preorder_and_inorder_traversal_105 right;
+      Construct_binary_tree_from_preorder_and_inorder_traversal_105() {}
+      Construct_binary_tree_from_preorder_and_inorder_traversal_105(int val) { this.val = val; }
+      Construct_binary_tree_from_preorder_and_inorder_traversal_105(int val, Construct_binary_tree_from_preorder_and_inorder_traversal_105 left, Construct_binary_tree_from_preorder_and_inorder_traversal_105 right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }
+ 
+class Solution {
+    int preIndex = 0;
+    Map<Integer, Integer> map = new HashMap<>();
+
+    public Construct_binary_tree_from_preorder_and_inorder_traversal_105 buildTree(int[] preorder, int[] inorder) {
+        for (int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+        return build(preorder, 0, inorder.length - 1);
+    }
+
+    private Construct_binary_tree_from_preorder_and_inorder_traversal_105 build(int[] preorder, int left, int right) {
+        if (left > right) return null;
+
+        int rootVal = preorder[preIndex++];
+        Construct_binary_tree_from_preorder_and_inorder_traversal_105 root = new Construct_binary_tree_from_preorder_and_inorder_traversal_105(rootVal);
+
+        int mid = map.get(rootVal);
+
+        root.left = build(preorder, left, mid - 1);
+        root.right = build(preorder, mid + 1, right);
+
+        return root;
+    }
+}
