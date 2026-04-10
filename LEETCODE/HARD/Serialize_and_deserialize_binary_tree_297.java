@@ -22,3 +22,56 @@ Constraints:
 The number of nodes in the tree is in the range [0, 104].
 -1000 <= Node.val <= 1000
 */
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Serialize_and_deserialize_binary_tree_297 {
+      int val;
+      Serialize_and_deserialize_binary_tree_297 left;
+      Serialize_and_deserialize_binary_tree_297 right;
+      Serialize_and_deserialize_binary_tree_297(int x) { val = x; }
+  }
+
+class Codec {
+
+    // Encodes a tree to a single string (Preorder)
+    public String serialize(Serialize_and_deserialize_binary_tree_297 root) {
+        StringBuilder sb = new StringBuilder();
+        serializeHelper(root, sb);
+        return sb.toString();
+    }
+
+    private void serializeHelper(Serialize_and_deserialize_binary_tree_297 node, StringBuilder sb) {
+        if (node == null) {
+            sb.append("null,");
+            return;
+        }
+        sb.append(node.val).append(",");
+        serializeHelper(node.left, sb);
+        serializeHelper(node.right, sb);
+    }
+
+    // Decodes your encoded data to tree
+    public Serialize_and_deserialize_binary_tree_297 deserialize(String data) {
+        String[] arr = data.split(",");
+        Queue<String> q = new LinkedList<>(Arrays.asList(arr));
+        return deserializeHelper(q);
+    }
+
+    private Serialize_and_deserialize_binary_tree_297 deserializeHelper(Queue<String> q) {
+        String val = q.poll();
+        if (val.equals("null")) return null;
+
+        Serialize_and_deserialize_binary_tree_297 node = new Serialize_and_deserialize_binary_tree_297(Integer.parseInt(val));
+        node.left = deserializeHelper(q);
+        node.right = deserializeHelper(q);
+        return node;
+    }
+}
+
+// Your Codec object will be instantiated and called as such:
+// Codec ser = new Codec();
+// Codec deser = new Codec();
+// TreeNode ans = deser.deserialize(ser.serialize(root));
