@@ -23,3 +23,33 @@ Constraints:
 All the integers of nums are unique.
  
 */
+
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        backtrack(nums, new ArrayList<>(), new boolean[nums.length], res);
+        return res;
+    }
+
+    private void backtrack(int[] nums, List<Integer> temp, boolean[] used, List<List<Integer>> res) {
+        if (temp.size() == nums.length) {
+            res.add(new ArrayList<>(temp));
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (used[i]) continue;
+
+            used[i] = true;
+            temp.add(nums[i]);
+
+            backtrack(nums, temp, used, res);
+
+            temp.remove(temp.size() - 1);
+            used[i] = false;
+        }
+    }
+}
