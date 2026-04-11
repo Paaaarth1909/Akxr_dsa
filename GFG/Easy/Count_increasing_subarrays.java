@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given an array arr[] of integers, count the number of subarrays in arr[] which are strictly increasing with size greater or equal to 2. A subarray is a contiguous part of array. A subarray is strictly increasing if each element is greater then it's previous element if it exists.
 
 Examples:
@@ -16,3 +18,27 @@ Constraints:
 1 ≤ arr[i] ≤ 107
 
 */
+class Solution {
+    public int countIncreasing(int[] arr) {
+        
+        int n = arr.length;
+        int count = 0;
+        int len = 1;
+        
+        for(int i = 1; i < n; i++){
+            
+            if(arr[i] > arr[i - 1]){
+                len++;
+            } else {
+                // calculate subarrays from streak
+                count += (len * (len - 1)) / 2;
+                len = 1;
+            }
+        }
+        
+        // last streak
+        count += (len * (len - 1)) / 2;
+        
+        return count;
+    }
+}
