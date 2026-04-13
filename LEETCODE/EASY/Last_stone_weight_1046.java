@@ -30,3 +30,29 @@ Constraints:
 1 <= stones.length <= 30
 1 <= stones[i] <= 1000
 */
+
+import java.util.Collections;
+import java.util.PriorityQueue;
+
+class Solution {
+    public int lastStoneWeight(int[] stones) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+
+        // Add all stones
+        for (int stone : stones) {
+            pq.offer(stone);
+        }
+
+        // Smash stones
+        while (pq.size() > 1) {
+            int first = pq.poll();
+            int second = pq.poll();
+
+            if (first != second) {
+                pq.offer(first - second);
+            }
+        }
+
+        return pq.isEmpty() ? 0 : pq.peek();
+    }
+}
