@@ -1,3 +1,5 @@
+package GFG.Basic;
+
 /* Given a string s, remove all the spaces from the string and return the modified string.
 
 Examples:
@@ -12,3 +14,17 @@ Constraints:
 1 ≤ |s| ≤ 105
 
 */
+class Solution {
+    String removeSpaces(String s) {
+        
+        StringBuilder sb = new StringBuilder();
+        
+        for(char ch : s.toCharArray()){
+            if(ch != ' '){
+                sb.append(ch);
+            }
+        }
+        
+        return sb.toString();
+    }
+}
