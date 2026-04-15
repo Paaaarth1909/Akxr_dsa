@@ -21,3 +21,20 @@ Constraints:
 1 <= k <= nums.length <= 105
 -104 <= nums[i] <= 104
 */
+
+import java.util.PriorityQueue;
+
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+
+        for (int num : nums) {
+            pq.offer(num);
+            if (pq.size() > k) {
+                pq.poll(); // remove smallest
+            }
+        }
+
+        return pq.peek();
+    }
+}
