@@ -1,3 +1,5 @@
+package GFG.Basic;
+
 /* Given a string s, determine whether its characters can be rearranged to form a palindrome. Return true if it is possible to rearrange the string into a palindrome; otherwise, return false.
 
 Examples
@@ -16,3 +18,24 @@ Constraints:
 s consists of only lowercase English letters.
 
 */
+class Solution {
+    boolean canFormPalindrome(String s) {
+        
+        int[] freq = new int[26];
+        
+        // count frequency
+        for(char ch : s.toCharArray()){
+            freq[ch - 'a']++;
+        }
+        
+        int oddCount = 0;
+        
+        for(int f : freq){
+            if(f % 2 != 0){
+                oddCount++;
+            }
+        }
+        
+        return oddCount <= 1;
+    }
+}
