@@ -1,3 +1,5 @@
+package GFG.Basic;
+
 /* Given two positive integers x and y, determine if y is a power of x. If y is a power of x, return true. Otherwise, return false.
 
 Examples:
@@ -19,3 +21,17 @@ Constraints:
 1 ≤ y ≤ 109
 
 */
+class Solution {
+    public boolean isPower(int x, int y) {
+        
+        // edge case
+        if(y == 1) return true;
+        if(x == 1) return false;
+        
+        while(y % x == 0){
+            y = y / x;
+        }
+        
+        return y == 1;
+    }
+}
