@@ -19,3 +19,31 @@ Constraints:
 The number of nodes in the tree is in the range [1, 1000].
 -100 <= Node.val <= 100
 */
+
+   public class Symmeteric_tree_101 {
+      int val;
+      Symmeteric_tree_101 left;
+      Symmeteric_tree_101 right;
+      Symmeteric_tree_101() {}
+      Symmeteric_tree_101(int val) { this.val = val; }
+      Symmeteric_tree_101(int val, Symmeteric_tree_101 left, Symmeteric_tree_101 right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }
+  
+class Solution {
+    public boolean isSymmetric(Symmeteric_tree_101 root) {
+        return isMirror(root.left, root.right);
+    }
+
+    private boolean isMirror(Symmeteric_tree_101 t1, Symmeteric_tree_101 t2) {
+        if (t1 == null && t2 == null) return true;
+        if (t1 == null || t2 == null) return false;
+
+        return (t1.val == t2.val) &&
+               isMirror(t1.left, t2.right) &&
+               isMirror(t1.right, t2.left);
+    }
+}
