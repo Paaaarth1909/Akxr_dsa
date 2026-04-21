@@ -30,3 +30,30 @@ All Node.val are unique.
 p != q
 p and q will exist in the tree.
 */
+
+  public class Lowest_common_ancestor_of_a_binary_tree_236 {
+      int val;
+      Lowest_common_ancestor_of_a_binary_tree_236 left;
+      Lowest_common_ancestor_of_a_binary_tree_236 right;
+      Lowest_common_ancestor_of_a_binary_tree_236(int x) { val = x; }
+  }
+ 
+class Solution {
+    public Lowest_common_ancestor_of_a_binary_tree_236 lowestCommonAncestor(Lowest_common_ancestor_of_a_binary_tree_236 root, Lowest_common_ancestor_of_a_binary_tree_236 p, Lowest_common_ancestor_of_a_binary_tree_236 q) {
+        // Base case
+        if (root == null || root == p || root == q) {
+            return root;
+        }
+
+        Lowest_common_ancestor_of_a_binary_tree_236 left = lowestCommonAncestor(root.left, p, q);
+        Lowest_common_ancestor_of_a_binary_tree_236 right = lowestCommonAncestor(root.right, p, q);
+
+        // If both sides return non-null → this is LCA
+        if (left != null && right != null) {
+            return root;
+        }
+
+        // Otherwise return the non-null side
+        return left != null ? left : right;
+    }
+}
