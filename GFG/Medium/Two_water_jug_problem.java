@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* You are at the side of a river. You are given a m litre jug and a n litre jug . Both the jugs are initially empty. The jugs dont have markings to allow measuring smaller quantities. You have to use the jugs to measure d litres of water . Determine the minimum no of operations to be performed to obtain d litres of water in one of the jugs.
 The operations you can perform are:
 
@@ -24,3 +26,55 @@ Constraints:
 1 ≤ d ≤ 106
 
 */
+class Solution {
+    
+    public int minSteps(int m, int n, int d) {
+        
+        // check possibility
+        if(d > Math.max(m, n)) return -1;
+        if(d % gcd(m, n) != 0) return -1;
+        
+        // try both ways
+        return Math.min(pour(m, n, d), pour(n, m, d));
+    }
+    
+    // simulate pouring from 'from' jug to 'to' jug
+    int pour(int fromCap, int toCap, int d) {
+        
+        int from = fromCap; // fill
+        int to = 0;
+        
+        int step = 1; // initial fill
+        
+        while(from != d && to != d){
+            
+            int transfer = Math.min(from, toCap - to);
+            
+            to += transfer;
+            from -= transfer;
+            
+            step++;
+            
+            if(from == d || to == d) break;
+            
+            // if from becomes empty → fill again
+            if(from == 0){
+                from = fromCap;
+                step++;
+            }
+            
+            // if to becomes full → empty it
+            if(to == toCap){
+                to = 0;
+                step++;
+            }
+        }
+        
+        return step;
+    }
+    
+    int gcd(int a, int b){
+        if(b == 0) return a;
+        return gcd(b, a % b);
+    }
+}
