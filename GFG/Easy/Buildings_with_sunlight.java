@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given the array arr[] of heights of certain buildings that lie adjacent to each other, Sunlight starts falling from the left side of the buildings. If there is a building of a certain height, all the buildings to the right side of it having lesser heights cannot see the sun.
 
 Find the total number of buildings that receive sunlight.
@@ -20,3 +22,19 @@ Constraints:
 1 ≤ arr[i] ≤ 105
 
 */
+class Solution {
+    public int visibleBuildings(int arr[]) {
+        
+        int count = 0;
+        int maxHeight = 0;
+        
+        for(int h : arr){
+            if(h >= maxHeight){
+                count++;
+                maxHeight = h;
+            }
+        }
+        
+        return count;
+    }
+}
