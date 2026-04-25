@@ -23,3 +23,31 @@ The number of nodes in the tree is in the range [1, 5000].
 root is a binary search tree.
 1 <= val <= 107
 */
+
+  public class Search_in_a_BST_700 {
+      int val;
+      Search_in_a_BST_700 left;
+      Search_in_a_BST_700 right;
+      Search_in_a_BST_700() {}
+      Search_in_a_BST_700(int val) { this.val = val; }
+      Search_in_a_BST_700(int val, Search_in_a_BST_700 left, Search_in_a_BST_700 right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }
+ 
+class Solution {
+    public Search_in_a_BST_700 searchBST(Search_in_a_BST_700 root, int val) {
+        while (root != null) {
+            if (root.val == val) {
+                return root;
+            } else if (val < root.val) {
+                root = root.left;
+            } else {
+                root = root.right;
+            }
+        }
+        return null;
+    }
+} 
