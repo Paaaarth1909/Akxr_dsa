@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given an array arr[] , return the final array by repeatedly apply the following operation from left to right until no more valid operations can be performed.
 
 If two adjacent elements have opposite signs:
@@ -27,3 +29,45 @@ Constraints:
 arr[i] != 0
 
 */
+import java.util.*;
+
+class Solution {
+    public ArrayList<Integer> reducePairs(int[] arr) {
+        
+        Stack<Integer> st = new Stack<>();
+        
+        for(int num : arr){
+            
+            boolean alive = true;
+            
+            while(!st.isEmpty() && alive){
+                
+                int top = st.peek();
+                
+                // 🔥 FIX: handle BOTH opposite sign cases
+                if((top > 0 && num < 0) || (top < 0 && num > 0)){
+                    
+                    if(Math.abs(top) > Math.abs(num)){
+                        alive = false; // top survives
+                    }
+                    else if(Math.abs(top) < Math.abs(num)){
+                        st.pop(); // remove top
+                    }
+                    else{
+                        st.pop(); // both removed
+                        alive = false;
+                    }
+                }
+                else{
+                    break;
+                }
+            }
+            
+            if(alive){
+                st.push(num);
+            }
+        }
+        
+        return new ArrayList<>(st);
+    }
+}
