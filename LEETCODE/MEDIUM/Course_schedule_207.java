@@ -28,3 +28,50 @@ prerequisites[i].length == 2
 All the pairs prerequisites[i] are unique.
  
 */
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> graph = new ArrayList<>();
+        int[] indegree = new int[numCourses];
+
+        // Build graph
+        for (int i = 0; i < numCourses; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        for (int[] p : prerequisites) {
+            int a = p[0], b = p[1];
+            graph.get(b).add(a);
+            indegree[a]++;
+        }
+
+        // Kahn's Algorithm (BFS - Topological Sort)
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < numCourses; i++) {
+            if (indegree[i] == 0) {
+                q.offer(i);
+            }
+        }
+
+        int count = 0;
+
+        while (!q.isEmpty()) {
+            int curr = q.poll();
+            count++;
+
+            for (int next : graph.get(curr)) {
+                indegree[next]--;
+                if (indegree[next] == 0) {
+                    q.offer(next);
+                }
+            }
+        }
+
+        return count == numCourses;
+    }
+}
