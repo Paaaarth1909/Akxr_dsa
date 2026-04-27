@@ -29,3 +29,30 @@ All the values Node.val are unique.
 -108 <= val <= 108
 It's guaranteed that val does not exist in the original BST.
 */
+
+  public class Insert_into_a_BST_701 {
+      int val;
+      Insert_into_a_BST_701 left;
+      Insert_into_a_BST_701 right;
+      Insert_into_a_BST_701() {}
+      Insert_into_a_BST_701(int val) { this.val = val; }
+      Insert_into_a_BST_701(int val, Insert_into_a_BST_701 left, Insert_into_a_BST_701 right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }
+ 
+class Solution {
+    public Insert_into_a_BST_701 insertIntoBST(Insert_into_a_BST_701 root, int val) {
+        if (root == null) return new Insert_into_a_BST_701(val);
+
+        if (val < root.val) {
+            root.left = insertIntoBST(root.left, val);
+        } else {
+            root.right = insertIntoBST(root.right, val);
+        }
+
+        return root;
+    }
+}
