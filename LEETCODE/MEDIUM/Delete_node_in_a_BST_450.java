@@ -1,3 +1,5 @@
+package LEETCODE.MEDIUM;
+
 /* Given a root node reference of a BST and a key, delete the node with the given key in the BST. Return the root node reference (possibly updated) of the BST.
 
 Basically, the deletion can be divided into two stages:
@@ -34,3 +36,50 @@ Each node has a unique value.
 root is a valid binary search tree.
 -105 <= key <= 105
 */
+
+  public class Delete_node_in_a_BST_450 {
+      int val;
+      Delete_node_in_a_BST_450 left;
+      Delete_node_in_a_BST_450 right;
+      Delete_node_in_a_BST_450() {}
+      Delete_node_in_a_BST_450(int val) { this.val = val; }
+      Delete_node_in_a_BST_450(int val, Delete_node_in_a_BST_450 left, Delete_node_in_a_BST_450 right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }
+ 
+class Solution {
+    public Delete_node_in_a_BST_450 deleteNode(Delete_node_in_a_BST_450 root, int key) {
+        if (root == null) return null;
+
+        if (key < root.val) {
+            root.left = deleteNode(root.left, key);
+        } else if (key > root.val) {
+            root.right = deleteNode(root.right, key);
+        } else {
+            // Node found
+
+            // Case 1: no left child
+            if (root.left == null) return root.right;
+
+            // Case 2: no right child
+            if (root.right == null) return root.left;
+
+            // Case 3: two children
+            Delete_node_in_a_BST_450 minNode = findMin(root.right);
+            root.val = minNode.val;
+            root.right = deleteNode(root.right, minNode.val);
+        }
+
+        return root;
+    }
+
+    private Delete_node_in_a_BST_450 findMin(Delete_node_in_a_BST_450 node) {
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node;
+    }
+}
