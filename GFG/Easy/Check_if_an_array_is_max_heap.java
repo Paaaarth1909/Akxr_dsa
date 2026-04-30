@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given an array arr[], determine whether it represents the level-order traversal of a valid max heap. Return true if it does; otherwise, return false.
 
 Examples :
@@ -15,3 +17,24 @@ Constraints:
 1 ≤ arr[i] ≤ 105
 
 */
+class Solution {
+    public boolean isMaxHeap(int[] arr) {
+        
+        int n = arr.length;
+        
+        // Only need to check non-leaf nodes
+        for(int i = 0; i <= (n - 2) / 2; i++){
+            
+            int left = 2*i + 1;
+            int right = 2*i + 2;
+            
+            // check left child
+            if(arr[i] < arr[left]) return false;
+            
+            // check right child (if exists)
+            if(right < n && arr[i] < arr[right]) return false;
+        }
+        
+        return true;
+    }
+}
