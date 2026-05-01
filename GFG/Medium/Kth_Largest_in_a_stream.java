@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given an input stream arr[] of n integers. Find the Kth largest element (not Kth largest unique element) after insertion of each element in the stream and if the Kth largest element doesn't exist, the answer will be -1 for that insertion. 
 
 Return a list of size n, where each element represents the Kth largest value after the corresponding insertion.
@@ -26,3 +28,29 @@ Constraints:
 1 ≤ arr[i] ≤ 105
 
 */
+import java.util.*;
+
+class Solution {
+    static ArrayList<Integer> kthLargest(int[] arr, int k) {
+        
+        ArrayList<Integer> res = new ArrayList<>();
+        PriorityQueue<Integer> pq = new PriorityQueue<>(); // min heap
+        
+        for(int num : arr){
+            
+            pq.add(num);
+            
+            if(pq.size() > k){
+                pq.poll(); // remove smallest
+            }
+            
+            if(pq.size() < k){
+                res.add(-1);
+            } else {
+                res.add(pq.peek());
+            }
+        }
+        
+        return res;
+    }
+}
