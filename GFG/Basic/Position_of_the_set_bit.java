@@ -1,3 +1,5 @@
+package GFG.Basic;
+
 /* Given an integer n, determine position of the only set bit (1) in its binary representation. The position is counted starting from 1 at the least significant bit (LSB).
 
 If n contains exactly one set bit, return its position.
@@ -13,3 +15,20 @@ Explanation: 5 is represented as "101" in binary. It has two set bits; therefore
 Constraints:
 0 ≤ n ≤ 108 
 */
+class Solution {
+    public int findPosition(int n) {
+        
+        if(n == 0 || (n & (n - 1)) != 0){
+            return -1;
+        }
+        
+        int pos = 1;
+        
+        while(n > 1){
+            n = n >> 1;
+            pos++;
+        }
+        
+        return pos;
+    }
+}
