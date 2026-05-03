@@ -1,3 +1,5 @@
+package LEETCODE.MEDIUM;
+
 /* You are given a stream of points on the X-Y plane. Design an algorithm that:
 
 Adds new points from the stream into a data structure. Duplicate points are allowed and should be treated as different points.
@@ -41,3 +43,49 @@ point.length == 2
 At most 3000 calls in total will be made to add and count.
  
 */
+
+import java.util.HashMap;
+import java.util.Map;
+
+class DetectSquares {
+
+    // Map<x, Map<y, count>>
+    private Map<Integer, Map<Integer, Integer>> map;
+
+    public DetectSquares() {
+        map = new HashMap<>();
+    }
+    
+    public void add(int[] point) {
+        int x = point[0], y = point[1];
+        map.putIfAbsent(x, new HashMap<>());
+        Map<Integer, Integer> yMap = map.get(x);
+        yMap.put(y, yMap.getOrDefault(y, 0) + 1);
+    }
+    
+    public int count(int[] point) {
+        int x = point[0], y = point[1];
+        if (!map.containsKey(x)) return 0;
+
+        int res = 0;
+
+        // Iterate all possible y' on same x (vertical alignment)
+        for (int colY : map.get(x).keySet()) {
+            if (colY == y) continue;
+
+            int side = colY - y;
+
+            // Check right square (x + side)
+            res += map.get(x).get(colY) *
+                   map.getOrDefault(x + side, new HashMap<>()).getOrDefault(y, 0) *
+                   map.getOrDefault(x + side, new HashMap<>()).getOrDefault(colY, 0);
+
+            // Check left square (x - side)
+            res += map.get(x).get(colY) *
+                   map.getOrDefault(x - side, new HashMap<>()).getOrDefault(y, 0) *
+                   map.getOrDefault(x - side, new HashMap<>()).getOrDefault(colY, 0);
+        }
+
+        return res;
+    }
+}
