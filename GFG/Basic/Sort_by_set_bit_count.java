@@ -1,3 +1,5 @@
+package GFG.Basic;
+
 /* Given an array arr[] of integers, sort the array (in descending order) according to count of set bits in binary representation of array elements. 
 
 Note: For integers having same number of set bits in their binary representation, sort according to their position in the original array i.e., a stable sort.
@@ -31,3 +33,30 @@ Constraints:
 1 ≤ arr[i] ≤ 106
 
 */
+import java.util.*;
+
+class Solution {
+    ArrayList<Integer> sortBySetBitCount(int[] arr) {
+        
+        int n = arr.length;
+        
+        Integer[] temp = new Integer[n];
+        for(int i = 0; i < n; i++){
+            temp[i] = arr[i];
+        }
+        
+        Arrays.sort(temp, (a, b) -> {
+            int countA = Integer.bitCount(a);
+            int countB = Integer.bitCount(b);
+            
+            return countB - countA; // descending
+        });
+        
+        ArrayList<Integer> res = new ArrayList<>();
+        for(int num : temp){
+            res.add(num);
+        }
+        
+        return res;
+    }
+}
