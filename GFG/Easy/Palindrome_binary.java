@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given an integer n, determine whether its binary representation forms a palindrome. Return true if the binary representation of n is a palindrome; otherwise, return false.
 
 Note: A binary representation is considered a palindrome if it reads the same forward and backward.
@@ -14,3 +16,31 @@ Constraints:
 1 ≤ n ≤ 109
 
 */
+class Solution {
+    public boolean isBinaryPalindrome(int n) {
+        
+        int left = 31; // max bit index
+        
+        // find highest set bit
+        while(left >= 0 && ((n >> left) & 1) == 0){
+            left--;
+        }
+        
+        int right = 0;
+        
+        while(left > right){
+            
+            int leftBit = (n >> left) & 1;
+            int rightBit = (n >> right) & 1;
+            
+            if(leftBit != rightBit){
+                return false;
+            }
+            
+            left--;
+            right++;
+        }
+        
+        return true;
+    }
+}
