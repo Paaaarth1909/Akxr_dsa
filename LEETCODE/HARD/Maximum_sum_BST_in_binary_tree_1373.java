@@ -1,3 +1,5 @@
+package LEETCODE.HARD;
+
 /* Given a binary tree root, return the maximum sum of all keys of any sub-tree which is also a Binary Search Tree (BST).
 
 Assume a BST is defined as follows:
@@ -34,3 +36,52 @@ The number of nodes in the tree is in the range [1, 4 * 104].
 -4 * 104 <= Node.val <= 4 * 104
  
 */
+
+  public class Maximum_sum_BST_in_binary_tree_1373 {
+      int val;
+      Maximum_sum_BST_in_binary_tree_1373 left;
+      Maximum_sum_BST_in_binary_tree_1373 right;
+      Maximum_sum_BST_in_binary_tree_1373() {}
+      Maximum_sum_BST_in_binary_tree_1373(int val) { this.val = val; }
+      Maximum_sum_BST_in_binary_tree_1373(int val, Maximum_sum_BST_in_binary_tree_1373 left, Maximum_sum_BST_in_binary_tree_1373 right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }
+  
+class Solution {
+
+    int maxSum = 0;
+
+    public int maxSumBST(Maximum_sum_BST_in_binary_tree_1373 root) {
+        postOrder(root);
+        return maxSum;
+    }
+
+    // returns: {isBST, min, max, sum}
+    private int[] postOrder(Maximum_sum_BST_in_binary_tree_1373 node) {
+        if (node == null) {
+            return new int[]{1, Integer.MAX_VALUE, Integer.MIN_VALUE, 0};
+        }
+
+        int[] left = postOrder(node.left);
+        int[] right = postOrder(node.right);
+
+        // Check BST validity
+        if (left[0] == 1 && right[0] == 1 &&
+            node.val > left[2] && node.val < right[1]) {
+
+            int sum = left[3] + right[3] + node.val;
+            maxSum = Math.max(maxSum, sum);
+
+            int min = Math.min(node.val, left[1]);
+            int max = Math.max(node.val, right[2]);
+
+            return new int[]{1, min, max, sum};
+        }
+
+        // Not a BST
+        return new int[]{0, 0, 0, 0};
+    }
+}
