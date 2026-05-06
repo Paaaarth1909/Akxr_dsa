@@ -1,3 +1,5 @@
+package GFG.Basic;
+
 /* Given the root of a binary tree, return the size of the tree. The size of a binary tree is the total number of nodes in the tree.
 
 Examples:
@@ -15,3 +17,30 @@ Constraints:
 1 ≤ node->data ≤ 105
 
 */
+
+class Node
+{
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data)
+    {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+
+class Solution {
+    public int getSize(Node root) {
+        
+        // base case
+        if(root == null){
+            return 0;
+        }
+        
+        // count current node + left + right
+        return 1 + getSize(root.left) + getSize(root.right);
+    }
+}
