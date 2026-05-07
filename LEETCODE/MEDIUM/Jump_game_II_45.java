@@ -25,3 +25,21 @@ Constraints:
 0 <= nums[i] <= 1000
 It's guaranteed that you can reach nums[n - 1].
 */
+class Solution {
+    public int jump(int[] nums) {
+        int jumps = 0;
+        int currEnd = 0;
+        int farthest = 0;
+
+        for (int i = 0; i < nums.length - 1; i++) {
+            farthest = Math.max(farthest, i + nums[i]);
+
+            if (i == currEnd) {
+                jumps++;
+                currEnd = farthest;
+            }
+        }
+
+        return jumps;
+    }
+}
