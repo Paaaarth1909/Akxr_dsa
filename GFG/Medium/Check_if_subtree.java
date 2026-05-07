@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given two binary trees with roots root1 (for tree T) and root2 (for tree S), each containing at most N nodes. Determine whether tree S is a subtree of tree T.
 
 Return true if S is a subtree of T, otherwise return false.
@@ -19,3 +21,47 @@ Constraints:
 1 ≤ value of nodes ≤ 104
 
 */
+
+class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int x) {
+        data = x;
+        left = right = null;
+    }
+}
+
+class Solution {
+    
+    public boolean isSubTree(Node root1, Node root2) {
+        
+        // empty subtree is always subtree
+        if(root2 == null) return true;
+        
+        // main tree empty but subtree exists
+        if(root1 == null) return false;
+        
+        // check identical
+        if(isIdentical(root1, root2)){
+            return true;
+        }
+        
+        // search left or right
+        return isSubTree(root1.left, root2) ||
+               isSubTree(root1.right, root2);
+    }
+    
+    private boolean isIdentical(Node a, Node b){
+        
+        if(a == null && b == null) return true;
+        
+        if(a == null || b == null) return false;
+        
+        if(a.data != b.data) return false;
+        
+        return isIdentical(a.left, b.left) &&
+               isIdentical(a.right, b.right);
+    }
+}
