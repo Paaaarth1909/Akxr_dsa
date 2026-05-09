@@ -36,3 +36,20 @@ Constraints:
 triplets[i].length == target.length == 3
 1 <= ai, bi, ci, x, y, z <= 1000
 */
+class Solution {
+    public boolean mergeTriplets(int[][] triplets, int[] target) {
+        boolean a = false, b = false, c = false;
+
+        for (int[] t : triplets) {
+            if (t[0] > target[0] || t[1] > target[1] || t[2] > target[2]) {
+                continue;
+            }
+
+            if (t[0] == target[0]) a = true;
+            if (t[1] == target[1]) b = true;
+            if (t[2] == target[2]) c = true;
+        }
+
+        return a && b && c;
+    }
+}
