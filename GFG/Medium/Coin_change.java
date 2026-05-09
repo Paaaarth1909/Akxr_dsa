@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* You are given an array coins[], where each element represents a coin of a different denomination, and a target value sum. You have an unlimited supply of each coin type. Your task is to determine the minimum number of coins needed to obtain the target sum. If it is not possible to form the sum using the given coins, return -1.
 
 Examples:
@@ -20,3 +22,27 @@ Constraints:
 1 ≤ coins[i] ≤ 104
 1 ≤ coins.size() ≤ 103
 */
+import java.util.*;
+
+class Solution {
+
+    public int minCoins(int coins[], int sum) {
+        
+        int[] dp = new int[sum + 1];
+        
+        Arrays.fill(dp, Integer.MAX_VALUE - 1);
+        
+        dp[0] = 0;
+        
+        for(int coin : coins){
+            
+            for(int i = coin; i <= sum; i++){
+                
+                dp[i] = Math.min(dp[i],
+                                 1 + dp[i - coin]);
+            }
+        }
+        
+        return dp[sum] == Integer.MAX_VALUE - 1 ? -1 : dp[sum];
+    }
+}
