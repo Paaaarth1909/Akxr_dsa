@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given two machines, Machine A and Machine B, and a set of n tasks. The profit earned for performing each task is given in two arrays a[] and b[] such that if Machine A performs the i-th task, the profit is a[i], and if Machine B performs it, the profit is b[i].
 
 Machine A can process at most x tasks, and Machine B can process at most y tasks. It is guaranteed that x + y ≥ n, so all tasks can be assigned. Return the maximum possible profit after assigning each task to either Machine A or Machine B.
@@ -19,3 +21,48 @@ Constraints:
 1 ≤ a[i], b[i] ≤ 104
 
 */
+import java.util.*;
+
+class Solution {
+    
+    class Task {
+        int a, b, diff;
+        
+        Task(int a, int b) {
+            this.a = a;
+            this.b = b;
+            this.diff = Math.abs(a - b);
+        }
+    }
+
+    public int maxProfit(int x, int y, int[] a, int[] b) {
+        
+        int n = a.length;
+        
+        Task[] tasks = new Task[n];
+        
+        for(int i = 0; i < n; i++) {
+            tasks[i] = new Task(a[i], b[i]);
+        }
+        
+        // sort by absolute difference descending
+        Arrays.sort(tasks, (t1, t2) -> t2.diff - t1.diff);
+        
+        int profit = 0;
+        
+        for(Task t : tasks) {
+            
+            // prefer A
+            if((t.a >= t.b && x > 0) || y == 0) {
+                profit += t.a;
+                x--;
+            }
+            else {
+                profit += t.b;
+                y--;
+            }
+        }
+        
+        return profit;
+    }
+}
