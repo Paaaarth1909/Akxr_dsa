@@ -43,3 +43,39 @@ Constraints:
 1 <= weights[i] <= 500
  
 */
+class Solution {
+    public int shipWithinDays(int[] weights, int days) {
+        int left = 0, right = 0;
+
+        for (int w : weights) {
+            left = Math.max(left, w); 
+            right += w;              
+        }
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+
+            if (canShip(weights, days, mid)) {
+                right = mid; 
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        return left;
+    }
+
+    private boolean canShip(int[] weights, int days, int capacity) {
+        int curr = 0, neededDays = 1;
+
+        for (int w : weights) {
+            if (curr + w > capacity) {
+                neededDays++;
+                curr = 0;
+            }
+            curr += w;
+        }
+
+        return neededDays <= days;
+    }
+}
