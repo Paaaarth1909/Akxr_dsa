@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given a directed graph with V vertices labeled from 0 to V-1 and a list of edges edges[][], where each edge is represented as [u, v] indicating a directed edge from vertex u to vertex v, find a Mother Vertex of the graph.
 
 A Mother Vertex is a vertex from which all other vertices can be reached.
@@ -19,3 +21,55 @@ Constraints:
 1 ≤ edges[i][0], edges[i][1] ≤ V-1
 
 */
+import java.util.*;
+
+class Solution {
+
+    public int findMotherVertex(int V, int[][] edges) {
+
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+
+        for(int i = 0; i < V; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for(int[] e : edges) {
+            adj.get(e[0]).add(e[1]);
+        }
+
+        boolean[] visited = new boolean[V];
+        int candidate = -1;
+
+        // Find candidate mother vertex
+        for(int i = 0; i < V; i++) {
+            if(!visited[i]) {
+                dfs(i, adj, visited);
+                candidate = i;
+            }
+        }
+
+        // Verify candidate
+        Arrays.fill(visited, false);
+
+        dfs(candidate, adj, visited);
+
+        for(boolean v : visited) {
+            if(!v) return -1;
+        }
+
+        return candidate;
+    }
+
+    private void dfs(int node,
+                     ArrayList<ArrayList<Integer>> adj,
+                     boolean[] visited) {
+
+        visited[node] = true;
+
+        for(int nei : adj.get(node)) {
+            if(!visited[nei]) {
+                dfs(nei, adj, visited);
+            }
+        }
+    }
+}
