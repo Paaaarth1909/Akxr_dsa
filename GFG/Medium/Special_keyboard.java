@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given a special keyboard that contains only four keys:
 
 Key 1: Prints a single character 'A' on the screen.
@@ -19,3 +21,30 @@ Explanation: An optimal sequence is: press Key 1 three times to get "AAA", then 
 Constraints:
 1 ≤ n ≤ 70 
 */
+class Solution {
+    public int optimalKeys(int n) {
+        
+        if(n <= 6) return n;
+        
+        int[] dp = new int[n + 1];
+        
+        for(int i = 1; i <= 6; i++) {
+            dp[i] = i;
+        }
+        
+        for(int i = 7; i <= n; i++) {
+            
+            dp[i] = i;
+            
+            // try all breakpoints
+            for(int j = i - 3; j >= 1; j--) {
+                
+                int curr = dp[j] * (i - j - 1);
+                
+                dp[i] = Math.max(dp[i], curr);
+            }
+        }
+        
+        return dp[n];
+    }
+}
