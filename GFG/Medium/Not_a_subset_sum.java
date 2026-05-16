@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given a array arr[] of positive integers, find the smallest positive integer such that it cannot be represented as the sum of elements of any subset of the given array set.
 
 Examples:
@@ -12,3 +14,24 @@ Constraints
 1 ≤ arr.size() ≤ 105
 1 ≤ arr[i] ≤ 103
 */
+import java.util.*;
+
+class Solution {
+    public int findSmallest(int[] arr) {
+        
+        Arrays.sort(arr);
+        
+        long reachable = 1;
+        
+        for(int num : arr) {
+            
+            if(num > reachable) {
+                return (int)reachable;
+            }
+            
+            reachable += num;
+        }
+        
+        return (int)reachable;
+    }
+}
