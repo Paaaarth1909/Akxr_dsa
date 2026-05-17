@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given an array of negative and non-negative integers. You need to make the array beautiful.
 
 An array is beautiful if two adjacent integers, arr[i] and arr[i+1] are either negative or positive. You can do the following operation any number of times until the array becomes beautiful.
@@ -17,3 +19,30 @@ Constraints:
 1 ≤ arr.size() ≤ 105
 -105 ≤ arr[i] ≤ 105 
 */
+import java.util.*;
+
+class Solution {
+    
+    List<Integer> makeBeautiful(int[] arr) {
+        
+        Stack<Integer> st = new Stack<>();
+        
+        for(int num : arr) {
+            
+            if(!st.isEmpty() && opposite(st.peek(), num)) {
+                st.pop();
+            }
+            else {
+                st.push(num);
+            }
+        }
+        
+        return new ArrayList<>(st);
+    }
+    
+    private boolean opposite(int a, int b) {
+        
+        return (a >= 0 && b < 0) ||
+               (a < 0 && b >= 0);
+    }
+}
