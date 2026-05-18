@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given a number n, find its maximum sum value with 3 recursive breaks described below.
 
 Break into three parts n/2, n/3, and n/4 (consider only the integer part or floor value).
@@ -15,3 +17,31 @@ Explanation: Break n = 24 in three parts [24/2, 24/3, 24/4] = [12, 8, 6], now cu
 Constraints:
 0  ≤ n  ≤ 106 
 */
+import java.util.*;
+
+class Solution {
+
+    HashMap<Integer, Integer> memo = new HashMap<>();
+
+    public int maxSum(int n) {
+
+        if(n == 0) {
+            return 0;
+        }
+
+        if(memo.containsKey(n)) {
+            return memo.get(n);
+        }
+
+        int broken =
+            maxSum(n / 2) +
+            maxSum(n / 3) +
+            maxSum(n / 4);
+
+        int ans = Math.max(n, broken);
+
+        memo.put(n, ans);
+
+        return ans;
+    }
+}
