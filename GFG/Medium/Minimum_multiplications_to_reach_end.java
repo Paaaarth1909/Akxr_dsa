@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given two integers, start and end, along with an array of integers arr[]. In one operation, you can multiply the current value by any element from arr[], and then take the result modulo 1000 to obtain a new value.
 
 Find the minimum steps in which end can be achieved starting from start. If it is not possible to reach end, then return -1.
@@ -25,3 +27,47 @@ Constraints:
 0  ≤ start, end  < 103
 
 */
+import java.util.*;
+
+class Solution {
+    
+    public int minSteps(int[] arr, int start, int end) {
+        
+        if(start == end) {
+            return 0;
+        }
+        
+        Queue<int[]> q = new LinkedList<>();
+        
+        boolean[] visited = new boolean[1000];
+        
+        q.offer(new int[]{start, 0});
+        visited[start] = true;
+        
+        while(!q.isEmpty()) {
+            
+            int[] curr = q.poll();
+            
+            int num = curr[0];
+            int steps = curr[1];
+            
+            for(int x : arr) {
+                
+                int next = (num * x) % 1000;
+                
+                if(next == end) {
+                    return steps + 1;
+                }
+                
+                if(!visited[next]) {
+                    
+                    visited[next] = true;
+                    
+                    q.offer(new int[]{next, steps + 1});
+                }
+            }
+        }
+        
+        return -1;
+    }
+}
