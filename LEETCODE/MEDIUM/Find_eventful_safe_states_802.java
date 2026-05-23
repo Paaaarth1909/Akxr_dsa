@@ -1,3 +1,5 @@
+package LEETCODE.MEDIUM;
+
 /* There is a directed graph of n nodes with each node labeled from 0 to n - 1. The graph is represented by a 0-indexed 2D integer array graph where graph[i] is an integer array of nodes adjacent to node i, meaning there is an edge from node i to each node in graph[i].
 
 A node is a terminal node if there are no outgoing edges. A node is a safe node if every possible path starting from that node leads to a terminal node (or another safe node).
@@ -32,3 +34,53 @@ graph[i] is sorted in a strictly increasing order.
 The graph may contain self-loops.
 The number of edges in the graph will be in the range [1, 4 * 104].
 */
+import java.util.*;
+
+class Solution {
+    public List<Integer> eventualSafeNodes(int[][] graph) {
+        int n = graph.length;
+
+        List<List<Integer>> reverse = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            reverse.add(new ArrayList<>());
+        }
+
+        int[] indegree = new int[n];
+
+        for (int u = 0; u < n; u++) {
+            indegree[u] = graph[u].length;
+
+            for (int v : graph[u]) {
+                reverse.get(v).add(u);
+            }
+        }
+
+        Queue<Integer> queue = new LinkedList<>();
+
+        for (int i = 0; i < n; i++) {
+            if (indegree[i] == 0) {
+                queue.offer(i);
+            }
+        }
+
+        List<Integer> safe = new ArrayList<>();
+
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+
+            safe.add(node);
+
+            for (int prev : reverse.get(node)) {
+                indegree[prev]--;
+
+                if (indegree[prev] == 0) {
+                    queue.offer(prev);
+                }
+            }
+        }
+
+        Collections.sort(safe);
+
+        return safe;
+    }
+}
