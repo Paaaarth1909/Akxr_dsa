@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given a root of a binary tree with n nodes, where each node may contain positive or negative values, convert it into a tree such that each node’s new value is equal to the sum of all values in its left and right subtrees (based on the original tree). For leaf nodes, update their values to 0.
 
 Examples:      
@@ -29,3 +31,43 @@ Constraints:
 1 ≤ n ≤ 104
 
 */
+/* Structure for Tree Node
+class Node {
+    int data;
+    Node left, right;
+
+    // Constructor
+    Node(int val) {
+        data = val;
+        left = null;
+        right = null;
+    }
+};
+*/
+class Solution {
+
+    public void toSumTree(Node root) {
+
+        convert(root);
+    }
+
+    private int convert(Node node) {
+
+        if(node == null) {
+            return 0;
+        }
+
+        // store original value
+        int oldValue = node.data;
+
+        // subtree sums
+        int leftSum = convert(node.left);
+        int rightSum = convert(node.right);
+
+        // update current node
+        node.data = leftSum + rightSum;
+
+        // return total original subtree sum
+        return oldValue + node.data;
+    }
+}
