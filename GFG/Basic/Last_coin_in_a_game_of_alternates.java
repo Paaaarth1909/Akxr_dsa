@@ -1,3 +1,5 @@
+package GFG.Basic;
+
 /* Given an array integer arr[] , representing the values of coins arranged in a row.
 
 Two players play a game by picking coins alternately.
@@ -33,3 +35,23 @@ Constraints :
 1 ≤ arr.size() ≤ 105
 1 ≤ arr[i] ≤ 106 
 */
+class Solution {
+    public int coin(int[] arr) {
+        
+        int i = 0;
+        int j = arr.length - 1;
+        
+        // keep removing coins greedily
+        while(i < j) {
+            
+            if(arr[i] >= arr[j]) {
+                i++;   // remove left coin
+            } else {
+                j--;   // remove right coin
+            }
+        }
+        
+        // last remaining coin
+        return arr[i];
+    }
+}
