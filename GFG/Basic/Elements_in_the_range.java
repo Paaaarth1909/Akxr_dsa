@@ -1,3 +1,5 @@
+package GFG.Basic;
+
 /* Given an array arr[] containing distinct positive integers, and two integers start and end defining a range. Determine if the array contains all elements within inclusive range [start, end].
 
 Note: If the array contains all elements in the given range return true otherwise return false.
@@ -15,3 +17,26 @@ Constraints:
 1 ≤ start ≤ end ≤ 105
 
 */
+import java.util.*;
+
+class Solution {
+    public boolean checkElements(int start, int end, int[] arr) {
+        
+        HashSet<Integer> set = new HashSet<>();
+        
+        // store array elements
+        for(int num : arr) {
+            set.add(num);
+        }
+        
+        // check all elements in range
+        for(int i = start; i <= end; i++) {
+            
+            if(!set.contains(i)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}
