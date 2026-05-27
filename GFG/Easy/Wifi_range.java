@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* There are n rooms in a straight line in Geekland State University's hostel. You are given a binary string s of length n, where s[i] = '1' means there is a WiFi router in the i-th room, and s[i] = '0' means there is no WiFi in that room.
 
 Each WiFi router has a range of x, meaning it can cover up to x rooms to its left and x rooms to its right.
@@ -23,3 +25,36 @@ Constraints:
 0 ≤ x ≤ 105
 
 */
+class Solution {
+    
+    public boolean wifiRange(String s, int x) {
+        
+        int n = s.length();
+        
+        boolean[] covered = new boolean[n];
+        
+        // mark covered rooms
+        for(int i = 0; i < n; i++) {
+            
+            if(s.charAt(i) == '1') {
+                
+                int left = Math.max(0, i - x);
+                int right = Math.min(n - 1, i + x);
+                
+                for(int j = left; j <= right; j++) {
+                    covered[j] = true;
+                }
+            }
+        }
+        
+        // check if every room is covered
+        for(boolean room : covered) {
+            
+            if(!room) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}
