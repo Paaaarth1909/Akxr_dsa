@@ -29,3 +29,74 @@ ui != vi
 0 <= wi <= 100
 All the pairs (ui, vi) are unique. (i.e., no multiple edges.)
 */
+import java.util.*;
+
+class Solution {
+    public int networkDelayTime(int[][] times, int n, int k) {
+
+        Map<Integer, List<int[]>> graph = new HashMap<>();
+
+        // Build graph
+        for (int[] time : times) {
+            graph.computeIfAbsent(time[0], x -> new ArrayList<>())
+                 .add(new int[]{time[1], time[2]});
+        }
+
+        // Min-heap: [time, node]
+        PriorityQueue<int[]> pq =
+            new PriorityQueue<>((a, b) -> a[0] - b[0]);
+
+        pq.offer(new int[]{0, k});
+
+        int[] dist = new int[n + 1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+
+        dist[k] = 0;
+
+        while (!pq.isEmpty()) {
+            int[] curr = pq.poll();
+
+            int currTime = curr[0];
+            int node = curr[1];
+
+            // Skip outdated entries
+            if (currTime > dist[node]) {
+                continue;
+            }
+
+            if (graph.containsKey(node)) {
+
+                for (int[] neighbor : graph.get(node)) {
+
+                    int next = neighbor[0];
+                    int weight = neighbor[1];
+
+                    int newTime = currTime + weight;
+
+                    if (newTime < dist[next]) {
+
+                        dist[next] = newTime;
+
+                        pq.offer(new int[]{
+                            newTime,
+                            next
+                        });
+                    }
+                }
+            }
+        }
+
+        int maxTime = 0;
+
+        for (int i = 1; i <= n; i++) {
+
+            if (dist[i] == Integer.MAX_VALUE) {
+                return -1;
+            }
+
+            maxTime = Math.max(maxTime, dist[i]);
+        }
+
+        return maxTime;
+    }
+}
