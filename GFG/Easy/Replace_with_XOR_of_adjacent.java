@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given an array arr[] of n integers, modify the array in-place such that each element is replaced with the XOR of its adjacent elements.
 
 For the first element, update arr[0] = arr[0] ^ arr[1].
@@ -28,3 +30,25 @@ Constraints:
 2 ≤ n ≤ 105
 1 ≤ arr[i] ≤ 107 
 */
+class Solution {
+
+    public void replaceElements(int[] arr) {
+
+        int n = arr.length;
+
+        // store original array
+        int[] temp = arr.clone();
+
+        // first element
+        arr[0] = temp[0] ^ temp[1];
+
+        // middle elements
+        for(int i = 1; i < n - 1; i++) {
+
+            arr[i] = temp[i - 1] ^ temp[i + 1];
+        }
+
+        // last element
+        arr[n - 1] = temp[n - 2] ^ temp[n - 1];
+    }
+}
