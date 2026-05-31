@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given a number n, find whether n can be expressed as sum of two or more consecutive positive numbers.
 
 Examples :
@@ -15,3 +17,11 @@ Constraints:
 1 ≤ n ≤ 109
 
 */
+class Solution {
+
+    public boolean isSumOfConsecutive(int n) {
+
+        
+        return (n & (n - 1)) != 0;
+    }
+}
