@@ -29,3 +29,62 @@ n == matrix[i].length
 1 <= m, n <= 200
 0 <= matrix[i][j] <= 231 - 1
 */
+class Solution {
+
+    private int[][] dirs = {
+        {1, 0}, {-1, 0},
+        {0, 1}, {0, -1}
+    };
+
+    public int longestIncreasingPath(int[][] matrix) {
+
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        int[][] dp = new int[m][n];
+
+        int answer = 0;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+
+                answer = Math.max(
+                    answer,
+                    dfs(matrix, i, j, dp)
+                );
+            }
+        }
+
+        return answer;
+    }
+
+    private int dfs(int[][] matrix, int r, int c, int[][] dp) {
+
+        if (dp[r][c] != 0) {
+            return dp[r][c];
+        }
+
+        int maxLen = 1;
+
+        for (int[] d : dirs) {
+
+            int nr = r + d[0];
+            int nc = c + d[1];
+
+            if (nr >= 0 && nc >= 0 &&
+                nr < matrix.length &&
+                nc < matrix[0].length &&
+                matrix[nr][nc] > matrix[r][c]) {
+
+                maxLen = Math.max(
+                    maxLen,
+                    1 + dfs(matrix, nr, nc, dp)
+                );
+            }
+        }
+
+        dp[r][c] = maxLen;
+
+        return maxLen;
+    }
+}
