@@ -1,3 +1,5 @@
+package LEETCODE.MEDIUM;
+
 /* You are given a 0-indexed binary string s and two integers minJump and maxJump. In the beginning, you are standing at index 0, which is equal to '0'. You can move from index i to index j if the following conditions are fulfilled:
 
 i + minJump <= j <= min(i + maxJump, s.length - 1), and
@@ -26,3 +28,36 @@ s[i] is either '0' or '1'.
 s[0] == '0'
 1 <= minJump <= maxJump < s.length
 */
+class Solution {
+    public boolean canReach(String s, int minJump, int maxJump) {
+
+        int n = s.length();
+
+        boolean[] reachable = new boolean[n];
+
+        reachable[0] = true;
+
+        int farthest = 0;
+
+        for (int i = 0; i < n; i++) {
+
+            if (!reachable[i]) {
+                continue;
+            }
+
+            int start = Math.max(i + minJump, farthest);
+            int end = Math.min(i + maxJump, n - 1);
+
+            for (int j = start; j <= end; j++) {
+
+                if (s.charAt(j) == '0') {
+                    reachable[j] = true;
+                }
+            }
+
+            farthest = end + 1;
+        }
+
+        return reachable[n - 1];
+    }
+}
