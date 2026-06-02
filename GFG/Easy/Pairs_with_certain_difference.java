@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given an array of integers and a number k, the task is the find maximum pair sum with the following conditions on the pairs.
 
 Pair difference should be less than k.
@@ -33,3 +35,28 @@ Constraints:
 0 ≤ k ≤ 105
 1 ≤ arr[i] ≤ 104 
 */
+import java.util.*;
+
+class Solution {
+
+    public int sumDiffPairs(int[] arr, int k) {
+
+        Arrays.sort(arr);
+
+        int n = arr.length;
+
+        int ans = 0;
+
+        for(int i = n - 1; i > 0; i--) {
+
+            if(arr[i] - arr[i - 1] < k) {
+
+                ans += arr[i] + arr[i - 1];
+
+                i--;
+            }
+        }
+
+        return ans;
+    }
+}
