@@ -1,3 +1,5 @@
+package LEETCODE.MEDIUM;
+
 /* Given a list of accounts where each element accounts[i] is a list of strings, where the first element accounts[i][0] is a name, and the rest of the elements are emails representing emails of the account.
 
 Now, we would like to merge these accounts. Two accounts definitely belong to the same person if there is some common email to both accounts. Note that even if two accounts have the same name, they may belong to different people as people could have the same name. A person can have any number of accounts initially, but all of their accounts definitely have the same name.
@@ -30,3 +32,85 @@ accounts[i][0] consists of English letters.
 accounts[i][j] (for j > 0) is a valid email.
  
 */
+import java.util.*;
+
+class Solution {
+
+    public List<List<String>> accountsMerge(List<List<String>> accounts) {
+
+        Map<String, String> parent = new HashMap<>();
+        Map<String, String> owner = new HashMap<>();
+
+        for (List<String> account : accounts) {
+
+            String name = account.get(0);
+
+            for (int i = 1; i < account.size(); i++) {
+
+                String email = account.get(i);
+
+                parent.put(email, email);
+                owner.put(email, name);
+            }
+        }
+
+        for (List<String> account : accounts) {
+
+            String firstEmail = account.get(1);
+
+            for (int i = 2; i < account.size(); i++) {
+
+                union(firstEmail, account.get(i), parent);
+            }
+        }
+
+        Map<String, TreeSet<String>> groups = new HashMap<>();
+
+        for (String email : parent.keySet()) {
+
+            String root = find(email, parent);
+
+            groups.putIfAbsent(root, new TreeSet<>());
+
+            groups.get(root).add(email);
+        }
+
+        List<List<String>> result = new ArrayList<>();
+
+        for (String root : groups.keySet()) {
+
+            List<String> merged = new ArrayList<>();
+
+            merged.add(owner.get(root));
+
+            merged.addAll(groups.get(root));
+
+            result.add(merged);
+        }
+
+        return result;
+    }
+
+    private String find(String x,
+                        Map<String, String> parent) {
+
+        if (!parent.get(x).equals(x)) {
+
+            parent.put(x, find(parent.get(x), parent));
+        }
+
+        return parent.get(x);
+    }
+
+    private void union(String a,
+                       String b,
+                       Map<String, String> parent) {
+
+        String pa = find(a, parent);
+        String pb = find(b, parent);
+
+        if (!pa.equals(pb)) {
+            parent.put(pa, pb);
+        }
+    }
+}
