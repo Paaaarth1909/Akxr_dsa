@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given an array arr[] of n integers and a 2D array queries[][] representing q queries, where each queries[i] consists of three integers: l, r, and x. For each query determine how many times the element x appears in the arr[] from index l to r (both inclusive).
 
 Return a list of integers where the i-th value represents the answer to the i-th query.
@@ -22,3 +24,85 @@ Constraints:
 0 ≤ queries[i][0] ≤ queries[i][1] < arr.size()
 
 */
+import java.util.*;
+
+class Solution {
+
+    public ArrayList<Integer> freqInRange(int[] arr, int[][] queries) {
+
+         HashMap<Integer, ArrayList<Integer>> map =
+            new HashMap<>();
+
+        int n = arr.length;
+
+        for(int i = 0; i < n; i++) {
+
+            map.putIfAbsent(arr[i], new ArrayList<>());
+
+            map.get(arr[i]).add(i);
+        }
+
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        for(int[] q : queries) {
+
+            int l = q[0];
+            int r = q[1];
+            int x = q[2];
+
+            if(!map.containsKey(x)) {
+                ans.add(0);
+                continue;
+            }
+
+            ArrayList<Integer> list = map.get(x);
+
+            int left = lowerBound(list, l);
+            int right = upperBound(list, r);
+
+            ans.add(right - left);
+        }
+
+        return ans;
+    }
+
+    private int lowerBound(ArrayList<Integer> list,
+                           int target) {
+
+        int low = 0, high = list.size();
+
+        while(low < high) {
+
+            int mid = low + (high - low) / 2;
+
+            if(list.get(mid) < target) {
+                low = mid + 1;
+            }
+            else {
+                high = mid;
+            }
+        }
+
+        return low;
+    }
+
+    private int upperBound(ArrayList<Integer> list,
+                           int target) {
+
+        int low = 0, high = list.size();
+
+        while(low < high) {
+
+            int mid = low + (high - low) / 2;
+
+            if(list.get(mid) <= target) {
+                low = mid + 1;
+            }
+            else {
+                high = mid;
+            }
+        }
+
+        return low;
+    }
+}s
