@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given a binary string s consisting of 0s and 1s. Find the maximum difference of the number of 0s and the number of 1s (number of 0s – number of 1s) in a substring of the string.
 
 Note: In the case of all 1s, the answer will be -1.
@@ -14,3 +16,20 @@ Constraints:
 1 ≤ s.size() ≤ 105
 
 */
+class Solution {
+    int maxSubstring(String s) {
+        
+        int maxSoFar = -1;
+        int currSum = 0;
+        
+        for (char ch : s.toCharArray()) {
+            
+            int val = (ch == '0') ? 1 : -1;
+            
+            currSum = Math.max(val, currSum + val);
+            maxSoFar = Math.max(maxSoFar, currSum);
+        }
+        
+        return maxSoFar;
+    }
+}
