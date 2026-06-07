@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Consider a special family of Engineers and Doctors with following rules :
 
 Everybody has two children.
@@ -21,3 +23,11 @@ Constraints:
 1 ≤ level ≤ 109
 1 ≤ pos ≤ 109 
 */
+class Solution {
+    public String profession(int level, int pos) {
+        
+        int flips = Integer.bitCount(pos - 1);
+        
+        return (flips % 2 == 0) ? "Engineer" : "Doctor";
+    }
+}
