@@ -1,3 +1,5 @@
+package GFG.Easy;
+
 /* Given a singly linked list, remove all nodes that have a node with a greater value anywhere to their right in the list. Return the head of the modified linked list.
 
 Examples:
@@ -15,3 +17,54 @@ Constraints:
 1 ≤ element of linked list ≤ 106
 
 */
+/* Structure of linked list node
+class Node {
+
+    int data;
+    Node next;
+
+    Node(int d) {
+        data = d;
+        next = null;
+    }
+}
+*/
+class Solution {
+    
+    Node compute(Node head) {
+        
+        // Reverse the list
+        head = reverse(head);
+        
+        int maxSoFar = head.data;
+        Node curr = head;
+        
+        while (curr != null && curr.next != null) {
+            
+            if (curr.next.data < maxSoFar) {
+                curr.next = curr.next.next; // delete node
+            } else {
+                curr = curr.next;
+                maxSoFar = curr.data;
+            }
+        }
+        
+        // Reverse back
+        return reverse(head);
+    }
+    
+    private Node reverse(Node head) {
+        
+        Node prev = null;
+        Node curr = head;
+        
+        while (curr != null) {
+            Node next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        
+        return prev;
+    }
+}
