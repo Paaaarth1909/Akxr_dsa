@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given an array arr[] consisting of n distinct integers, find the maximum count of integers that are binary searchable in the given array. Binary searchable elements are determined using the standard Binary Search implementation described below.
 
 Initially l is 0 and r is size of array - 1 
@@ -20,3 +22,40 @@ Constraints:
 1 ≤ arr[i] ≤ 105
 
 */
+class Solution {
+
+    int count;
+
+    public int binarySearchable(int[] arr) {
+
+        count = 0;
+
+        dfs(arr, 0, arr.length - 1,
+            Integer.MIN_VALUE,
+            Integer.MAX_VALUE);
+
+        return count;
+    }
+
+    private void dfs(int[] arr, int l, int r,
+                     int low, int high) {
+
+        if (l > r) return;
+
+        int mid = (l + r) / 2;
+
+        if (arr[mid] > low && arr[mid] < high) {
+            count++;
+        }
+
+        // Left subtree:
+        dfs(arr, l, mid - 1,
+            low,
+            Math.min(high, arr[mid]));
+
+        // Right subtree:
+        dfs(arr, mid + 1, r,
+            Math.max(low, arr[mid]),
+            high);
+    }
+}
