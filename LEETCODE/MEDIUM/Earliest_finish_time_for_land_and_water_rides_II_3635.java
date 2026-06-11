@@ -1,3 +1,5 @@
+package LEETCODE.MEDIUM;
+
 /* You are given two categories of theme park attractions: land rides and water rides.
 
 Land rides
@@ -62,3 +64,113 @@ landStartTime.length == landDuration.length == n
 waterStartTime.length == waterDuration.length == m
 1 <= landStartTime[i], landDuration[i], waterStartTime[j], waterDuration[j] <= 105
 */
+import java.util.*;
+
+class Solution {
+
+    private int solve(int[] Astart,
+                      int[] Adur,
+                      int[] Bstart,
+                      int[] Bdur) {
+
+        int m = Bstart.length;
+
+        int[][] rides = new int[m][2];
+
+        for (int i = 0; i < m; i++) {
+            rides[i][0] = Bstart[i];
+            rides[i][1] = Bdur[i];
+        }
+
+        Arrays.sort(rides, (a, b) -> a[0] - b[0]);
+
+        int[] prefixMinDur = new int[m];
+
+        prefixMinDur[0] = rides[0][1];
+
+        for (int i = 1; i < m; i++) {
+            prefixMinDur[i] =
+                Math.min(prefixMinDur[i - 1],
+                         rides[i][1]);
+        }
+
+        int[] suffixMin = new int[m];
+
+        suffixMin[m - 1] =
+            rides[m - 1][0] + rides[m - 1][1];
+
+        for (int i = m - 2; i >= 0; i--) {
+
+            suffixMin[i] =
+                Math.min(
+                    suffixMin[i + 1],
+                    rides[i][0] + rides[i][1]
+                );
+        }
+
+        int ans = Integer.MAX_VALUE;
+
+        for (int i = 0; i < Astart.length; i++) {
+
+            int finish =
+                Astart[i] + Adur[i];
+
+            int idx = lowerBound(rides, finish);
+
+            if (idx > 0) {
+
+                ans = Math.min(
+                    ans,
+                    finish + prefixMinDur[idx - 1]
+                );
+            }
+
+            if (idx < m) {
+
+                ans = Math.min(
+                    ans,
+                    suffixMin[idx]
+                );
+            }
+        }
+
+        return ans;
+    }
+
+    private int lowerBound(int[][] rides, int target) {
+
+        int left = 0;
+        int right = rides.length;
+
+        while (left < right) {
+
+            int mid = left + (right - left) / 2;
+
+            if (rides[mid][0] < target) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+
+        return left;
+    }
+
+    public int earliestFinishTime(int[] landStartTime,
+                                  int[] landDuration,
+                                  int[] waterStartTime,
+                                  int[] waterDuration) {
+
+        return Math.min(
+            solve(landStartTime,
+                  landDuration,
+                  waterStartTime,
+                  waterDuration),
+
+            solve(waterStartTime,
+                  waterDuration,
+                  landStartTime,
+                  landDuration)
+        );
+    }
+}
