@@ -1,3 +1,5 @@
+package LEETCODE.MEDIUM;
+
 /* You are given an array prices where prices[i] is the price of a given stock on the ith day, and an integer fee representing a transaction fee.
 
 Find the maximum profit you can achieve. You may complete as many transactions as you like, but you need to pay the transaction fee for each transaction.
@@ -30,3 +32,18 @@ Constraints:
 1 <= prices[i] < 5 * 104
 0 <= fee < 5 * 104
 */
+class Solution {
+    public int maxProfit(int[] prices, int fee) {
+        int hold = -prices[0]; 
+        int cash = 0;          
+
+        for (int i = 1; i < prices.length; i++) {
+            int prevCash = cash;
+
+            cash = Math.max(cash, hold + prices[i] - fee);
+            hold = Math.max(hold, prevCash - prices[i]);
+        }
+
+        return cash;
+    }
+}
