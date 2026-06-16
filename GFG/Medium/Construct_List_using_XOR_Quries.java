@@ -30,3 +30,37 @@ Constraints:
 1 ≤ q ≤ 105
 0 ≤ x ≤ 10
 */
+import java.util.*;
+
+class Solution {
+    public ArrayList<Integer> constructList(int[][] queries) {
+
+        ArrayList<Integer> list = new ArrayList<>();
+        
+        int xorVal = 0;
+
+        list.add(0);
+
+        for (int[] q : queries) {
+
+            int type = q[0];
+            int x = q[1];
+
+            if (type == 0) {
+                list.add(x ^ xorVal);
+            } else {
+                xorVal ^= x;
+            }
+        }
+
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        for (int val : list) {
+            ans.add(val ^ xorVal);
+        }
+
+        Collections.sort(ans);
+
+        return ans;
+    }
+}
