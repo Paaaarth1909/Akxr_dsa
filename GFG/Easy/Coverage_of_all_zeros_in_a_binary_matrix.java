@@ -20,3 +20,50 @@ Explanation: There are only 1 coverage. There fore answer for this test case is 
 Constraints:
 1 ≤ matrix.size, matrix[0].size ≤ 100
 */
+class Solution {
+    public int findCoverage(int[][] mat) {
+        
+        int n = mat.length;
+        int m = mat[0].length;
+
+        int total = 0;
+
+        for (int i = 0; i < n; i++) {
+            
+            for (int j = 0; j < m; j++) {
+                
+                if (mat[i][j] == 1) continue;
+
+                for (int k = j - 1; k >= 0; k--) {
+                    if (mat[i][k] == 1) {
+                        total++;
+                        break;
+                    }
+                }
+
+                for (int k = j + 1; k < m; k++) {
+                    if (mat[i][k] == 1) {
+                        total++;
+                        break;
+                    }
+                }
+
+                for (int k = i - 1; k >= 0; k--) {
+                    if (mat[k][j] == 1) {
+                        total++;
+                        break;
+                    }
+                }
+
+                for (int k = i + 1; k < n; k++) {
+                    if (mat[k][j] == 1) {
+                        total++;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return total;
+    }
+}
