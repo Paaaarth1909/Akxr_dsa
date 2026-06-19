@@ -30,3 +30,38 @@ Constraints:
 -104 ≤ arr[i] ≤ 104
 Sum of n over all test case does not exceed 106.
 */
+import java.util.*;
+
+class Solution {
+    public ArrayList<Integer> optimalArray(int[] arr) {
+        
+        int n = arr.length;
+        
+        long[] prefix = new long[n];
+        prefix[0] = arr[0];
+        
+        for (int i = 1; i < n; i++) {
+            prefix[i] = prefix[i - 1] + arr[i];
+        }
+        
+        ArrayList<Integer> ans = new ArrayList<>();
+        
+        for (int i = 0; i < n; i++) {
+            
+            int mid = i / 2;
+            
+            long leftSum = prefix[mid];
+            long rightSum = prefix[i] - prefix[mid];
+            
+            long leftCost =
+                1L * arr[mid] * (mid + 1) - leftSum;
+            
+            long rightCost =
+                rightSum - 1L * arr[mid] * (i - mid);
+            
+            ans.add((int)(leftCost + rightCost));
+        }
+        
+        return ans;
+    }
+}
