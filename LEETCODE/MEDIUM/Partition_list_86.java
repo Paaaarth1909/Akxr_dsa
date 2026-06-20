@@ -21,3 +21,33 @@ The number of nodes in the list is in the range [0, 200].
 -100 <= Node.val <= 100
 -200 <= x <= 200
 */
+class Solution {
+    public ListNode partition(ListNode head, int x) {
+
+        ListNode lessDummy = new ListNode(0);
+        ListNode greaterDummy = new ListNode(0);
+
+        ListNode less = lessDummy;
+        ListNode greater = greaterDummy;
+
+        ListNode curr = head;
+
+        while (curr != null) {
+
+            if (curr.val < x) {
+                less.next = curr;
+                less = less.next;
+            } else {
+                greater.next = curr;
+                greater = greater.next;
+            }
+
+            curr = curr.next;
+        }
+
+        greater.next = null;
+        less.next = greaterDummy.next;
+
+        return lessDummy.next;
+    }
+}
