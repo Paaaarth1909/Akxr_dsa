@@ -1,3 +1,5 @@
+package LEETCODE.MEDIUM;
+
 /* You are given an absolute path for a Unix-style file system, which always begins with a slash '/'. Your task is to transform this absolute path into its simplified canonical path.
 
 The rules of a Unix-style file system are as follows:
@@ -75,3 +77,41 @@ path consists of English letters, digits, period '.', slash '/' or '_'.
 path is a valid absolute Unix path.
  
 */
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+class Solution {
+    public String simplifyPath(String path) {
+
+        String[] parts = path.split("/");
+        Deque<String> stack = new ArrayDeque<>();
+
+        for (String part : parts) {
+
+            if (part.equals("") || part.equals(".")) {
+                continue;
+            }
+
+            if (part.equals("..")) {
+                if (!stack.isEmpty()) {
+                    stack.pop();
+                }
+            } else {
+                stack.push(part);
+            }
+        }
+
+        if (stack.isEmpty()) {
+            return "/";
+        }
+
+        StringBuilder result = new StringBuilder();
+
+        while (!stack.isEmpty()) {
+            result.insert(0, "/" + stack.pop());
+        }
+
+        return result.toString();
+    }
+}
