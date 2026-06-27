@@ -50,3 +50,102 @@ parent[0] == -1
 parent represents a valid tree.
 At most 2000 calls in total will be made to lock, unlock, and upgrade.
 */
+import java.util.*;
+
+class LockingTree {
+
+    private int[] parent;
+    private List<Integer>[] children;
+    private int[] lockedBy; 
+
+    public LockingTree(int[] parent) {
+
+        int n = parent.length;
+
+        this.parent = parent;
+        this.lockedBy = new int[n];
+
+        children = new ArrayList[n];
+
+        for (int i = 0; i < n; i++) {
+            children[i] = new ArrayList<>();
+        }
+
+        for (int i = 1; i < n; i++) {
+            children[parent[i]].add(i);
+        }
+    }
+
+    public boolean lock(int num, int user) {
+
+        if (lockedBy[num] != 0) {
+            return false;
+        }
+
+        lockedBy[num] = user;
+        return true;
+    }
+
+    public boolean unlock(int num, int user) {
+
+        if (lockedBy[num] != user) {
+            return false;
+        }
+
+        lockedBy[num] = 0;
+        return true;
+    }
+
+    public boolean upgrade(int num, int user) {
+
+        if (lockedBy[num] != 0) {
+            return false;
+        }
+
+        int curr = parent[num];
+
+        while (curr != -1) {
+            if (lockedBy[curr] != 0) {
+                return false;
+            }
+            curr = parent[curr];
+        }
+
+        if (!hasLockedDescendant(num)) {
+            return false;
+        }
+
+        unlockDescendants(num);
+
+        lockedBy[num] = user;
+
+        return true;
+    }
+
+    private boolean hasLockedDescendant(int node) {
+
+        for (int child : children[node]) {
+
+            if (lockedBy[child] != 0) {
+                return true;
+            }
+
+            if (hasLockedDescendant(child)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void unlockDescendants(int node) {
+
+        for (int child : children[node]) {
+
+            lockedBy[child] = 0;
+
+            unlockDescendants(child);
+        }
+    }
+}
+
