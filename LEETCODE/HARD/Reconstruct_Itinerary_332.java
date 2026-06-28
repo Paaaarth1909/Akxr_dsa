@@ -1,3 +1,5 @@
+package LEETCODE.HARD;
+
 /* You are given a list of airline tickets where tickets[i] = [fromi, toi] represent the departure and the arrival airports of one flight. Reconstruct the itinerary in order and return it.
 
 All of the tickets belong to a man who departs from "JFK", thus, the itinerary must begin with "JFK". If there are multiple valid itineraries, you should return the itinerary that has the smallest lexical order when read as a single string.
@@ -29,3 +31,39 @@ toi.length == 3
 fromi and toi consist of uppercase English letters.
 fromi != toi
 */
+import java.util.*;
+
+class Solution {
+
+    public List<String> findItinerary(List<List<String>> tickets) {
+
+        Map<String, PriorityQueue<String>> graph = new HashMap<>();
+
+        for (List<String> ticket : tickets) {
+            String from = ticket.get(0);
+            String to = ticket.get(1);
+            
+
+            graph.computeIfAbsent(from, k -> new PriorityQueue<>()).offer(to);
+        }
+
+        LinkedList<String> itinerary = new LinkedList<>();
+
+        dfs("JFK", graph, itinerary);
+
+        return itinerary;
+    }
+
+    private void dfs(String airport,
+                     Map<String, PriorityQueue<String>> graph,
+                     LinkedList<String> itinerary) {
+
+        PriorityQueue<String> destinations = graph.get(airport);
+
+        while (destinations != null && !destinations.isEmpty()) {
+            dfs(destinations.poll(), graph, itinerary);
+        }
+
+        itinerary.addFirst(airport);
+    }
+}
