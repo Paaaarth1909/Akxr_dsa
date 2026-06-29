@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given two arrays a[] and b[] of positive integers of size n and m respectively, where m ≤ n.  You are allowed to insert zeros anywhere into the second array b so that its length becomes equal to n.
 
 The dot product of two arrays of equal length n is defined as: a[0]*b[0] + a[1]*b[1] + ... + a[n-1]*b[n-1].
@@ -18,3 +20,41 @@ Constraints:
 1 ≤ m ≤ n ≤ 103
 1 ≤ a[i], b[i] ≤ 103 
 */
+class Solution {
+    public int maxDotProduct(int[] a, int[] b) {
+        
+        int n = a.length, m = b.length;
+        
+        long[][] dp = new long[n + 1][m + 1];
+        
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= m; j++) {
+                dp[i][j] = Long.MIN_VALUE;
+            }
+        }
+        
+        for (int i = 0; i <= n; i++) {
+            dp[i][0] = 0;
+        }
+        
+        for (int i = 1; i <= n; i++) {
+            
+            int upto = Math.min(i, m);
+            
+            for (int j = 1; j <= upto; j++) {
+                
+                dp[i][j] = dp[i - 1][j];
+                
+                if (dp[i - 1][j - 1] != Long.MIN_VALUE) {
+                    dp[i][j] = Math.max(
+                        dp[i][j],
+                        dp[i - 1][j - 1] +
+                        1L * a[i - 1] * b[j - 1]
+                    );
+                }
+            }
+        }
+        
+        return (int) dp[n][m];
+    }
+}
