@@ -1,3 +1,5 @@
+package LEETCODE.MEDIUM;
+
 /* You are given a directed graph with n nodes labeled from 0 to n - 1, where each node has exactly one outgoing edge.
 
 The graph is represented by a given 0-indexed integer array edges of length n, where edges[i] indicates that there is a directed edge from node i to node edges[i].
@@ -37,3 +39,24 @@ n == edges.length
 0 <= edges[i] < n
 edges[i] != i
 */
+class Solution {
+    public int edgeScore(int[] edges) {
+
+        int n = edges.length;
+        long[] score = new long[n];
+
+        for (int i = 0; i < n; i++) {
+            score[edges[i]] += i;
+        }
+
+        int ans = 0;
+
+        for (int i = 1; i < n; i++) {
+            if (score[i] > score[ans]) {
+                ans = i;
+            }
+        }
+
+        return ans;
+    }
+}
