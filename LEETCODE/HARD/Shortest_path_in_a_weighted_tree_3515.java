@@ -1,3 +1,5 @@
+package LEETCODE.HARD;
+
 /* You are given an integer n and an undirected, weighted tree rooted at node 1 with n nodes numbered from 1 to n. This is represented by a 2D array edges of length n - 1, where edges[i] = [ui, vi, wi] indicates an undirected edge from node ui to vi with weight wi.
 
 You are also given a 2D integer array queries of length q, where each queries[i] is either:
@@ -69,3 +71,110 @@ queries[i] == [2, x]
 (u, v) is always an edge from edges.
 1 <= w' <= 104
 */
+import java.util.*;
+
+class Solution {
+
+    List<int[]>[] g;
+    int[] tin, tout, parent, edgeWeight;
+    long[] dist;
+    int timer = 0;
+
+    public int[] treeQueries(int n, int[][] edges, int[][] queries) {
+
+        g = new ArrayList[n + 1];
+        for (int i = 1; i <= n; i++) g[i] = new ArrayList<>();
+
+        for (int[] e : edges) {
+            int u = e[0], v = e[1], w = e[2];
+            g[u].add(new int[]{v, w});
+            g[v].add(new int[]{u, w});
+        }
+
+        tin = new int[n + 1];
+        tout = new int[n + 1];
+        parent = new int[n + 1];
+        edgeWeight = new int[n + 1];
+        dist = new long[n + 1];
+
+        dfs(1, 0, 0);
+
+        BIT bit = new BIT(n + 2);
+
+        List<Integer> ans = new ArrayList<>();
+
+        for (int[] q : queries) {
+
+            if (q[0] == 1) {
+
+                int u = q[1], v = q[2], nw = q[3];
+
+                int child = parent[u] == v ? u : v;
+
+                long delta = (long) nw - edgeWeight[child];
+                edgeWeight[child] = nw;
+
+                bit.add(tin[child], delta);
+                bit.add(tout[child] + 1, -delta);
+
+            } else {
+
+                int x = q[1];
+
+                long cur = dist[x] + bit.query(tin[x]);
+
+                ans.add((int) cur);
+            }
+        }
+
+        int[] res = new int[ans.size()];
+        for (int i = 0; i < ans.size(); i++) res[i] = ans.get(i);
+
+        return res;
+    }
+
+    void dfs(int u, int p, long d) {
+
+        parent[u] = p;
+        dist[u] = d;
+        tin[u] = ++timer;
+
+        for (int[] e : g[u]) {
+
+            int v = e[0], w = e[1];
+
+            if (v == p) continue;
+
+            edgeWeight[v] = w;
+
+            dfs(v, u, d + w);
+        }
+
+        tout[u] = timer;
+    }
+
+    static class BIT {
+
+        long[] bit;
+
+        BIT(int n) {
+            bit = new long[n + 2];
+        }
+
+        void add(int idx, long val) {
+            while (idx < bit.length) {
+                bit[idx] += val;
+                idx += idx & -idx;
+            }
+        }
+
+        long query(int idx) {
+            long res = 0;
+            while (idx > 0) {
+                res += bit[idx];
+                idx -= idx & -idx;
+            }
+            return res;
+        }
+    }
+}
