@@ -1,3 +1,5 @@
+package GFG.Hard;
+
 /* Given two arrays a[] and b[] of size n and m respectively, find the minimum number of insertions and deletions on the array a[], required to make both the arrays identical.
 
 Note: Array b[] is sorted and all its elements are distinct, operations can be performed at any index not necessarily at the end.
@@ -19,3 +21,42 @@ Explanation: Both the Arrays are already identical.
 1 ≤ a[i], b[i] ≤ 105
 
 */
+import java.util.*;
+
+class Solution {
+    public int minInsAndDel(int[] a, int[] b) {
+
+        HashMap<Integer, Integer> pos = new HashMap<>();
+
+        for (int i = 0; i < b.length; i++) {
+            pos.put(b[i], i);
+        }
+
+        ArrayList<Integer> seq = new ArrayList<>();
+
+        for (int x : a) {
+            if (pos.containsKey(x)) {
+                seq.add(pos.get(x));
+            }
+        }
+
+        ArrayList<Integer> lis = new ArrayList<>();
+
+        for (int x : seq) {
+
+            int idx = Collections.binarySearch(lis, x);
+
+            if (idx < 0) idx = -idx - 1;
+
+            if (idx == lis.size()) {
+                lis.add(x);
+            } else {
+                lis.set(idx, x);
+            }
+        }
+
+        int lcs = lis.size();
+
+        return a.length + b.length - 2 * lcs;
+    }
+}
