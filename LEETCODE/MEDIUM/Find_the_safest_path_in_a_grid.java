@@ -1,3 +1,5 @@
+package LEETCODE.MEDIUM;
+
 /* You are given a 0-indexed 2D matrix grid of size n x n, where (r, c) represents:
 
 A cell containing a thief if grid[r][c] = 1
@@ -46,3 +48,95 @@ grid[i].length == n
 grid[i][j] is either 0 or 1.
 There is at least one thief in the grid.
 */
+import java.util.*;
+
+class Solution {
+
+    public int maximumSafenessFactor(List<List<Integer>> grid) {
+
+        int n = grid.size();
+
+        int[][] dist = new int[n][n];
+
+        for (int[] row : dist) Arrays.fill(row, -1);
+
+        Queue<int[]> q = new LinkedList<>();
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid.get(i).get(j) == 1) {
+                    dist[i][j] = 0;
+                    q.offer(new int[]{i, j});
+                }
+            }
+        }
+
+        int[][] dir = {{1,0},{-1,0},{0,1},{0,-1}};
+
+        // Multi-source BFS to compute distance from nearest thief
+        while (!q.isEmpty()) {
+
+            int[] cur = q.poll();
+
+            int x = cur[0];
+            int y = cur[1];
+
+            for (int[] d : dir) {
+
+                int nx = x + d[0];
+                int ny = y + d[1];
+
+                if (nx >= 0 && nx < n &&
+                    ny >= 0 && ny < n &&
+                    dist[nx][ny] == -1) {
+
+                    dist[nx][ny] = dist[x][y] + 1;
+                    q.offer(new int[]{nx, ny});
+                }
+            }
+        }
+
+        // Max Heap: {safeness, x, y}
+        PriorityQueue<int[]> pq =
+                new PriorityQueue<>((a, b) -> b[0] - a[0]);
+
+        boolean[][] vis = new boolean[n][n];
+
+        pq.offer(new int[]{dist[0][0], 0, 0});
+
+        while (!pq.isEmpty()) {
+
+            int[] cur = pq.poll();
+
+            int safe = cur[0];
+            int x = cur[1];
+            int y = cur[2];
+
+            if (vis[x][y]) continue;
+
+            vis[x][y] = true;
+
+            if (x == n - 1 && y == n - 1)
+                return safe;
+
+            for (int[] d : dir) {
+
+                int nx = x + d[0];
+                int ny = y + d[1];
+
+                if (nx >= 0 && nx < n &&
+                    ny >= 0 && ny < n &&
+                    !vis[nx][ny]) {
+
+                    pq.offer(new int[]{
+                            Math.min(safe, dist[nx][ny]),
+                            nx,
+                            ny
+                    });
+                }
+            }
+        }
+
+        return 0;
+    }
+}
