@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given an array arr[], find the maximum sum of a non-empty subarray. You are allowed to skip at most one element in the subarray.
 
 Note: After skipping the element, the subarray must still be non-empty.
@@ -15,3 +17,29 @@ Constraints:
 -103 ≤ arr[i] ≤ 103
 
 */
+class Solution {
+    public int maxSumSubarray(int[] arr) {
+
+        int noDel = arr[0];
+        int oneDel = Integer.MIN_VALUE;
+        int ans = arr[0];
+
+        for (int i = 1; i < arr.length; i++) {
+
+            int prevNoDel = noDel;
+
+            noDel = Math.max(arr[i], noDel + arr[i]);
+
+            int temp = oneDel;
+            oneDel = prevNoDel;          // delete current element
+
+            if (temp != Integer.MIN_VALUE) {
+                oneDel = Math.max(oneDel, temp + arr[i]);
+            }
+
+            ans = Math.max(ans, Math.max(noDel, oneDel));
+        }
+
+        return ans;
+    }
+}
