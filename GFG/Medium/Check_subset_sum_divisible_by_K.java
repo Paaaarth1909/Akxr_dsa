@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given an array arr[] of positive integers and a value k. Return true if the sum of any non-empty subset of the given array is divisible by k otherwise, return false.
 
 Examples:
@@ -13,3 +15,28 @@ Constraints:
 1 ≤ arr[i] ≤ 103
 
 */
+class Solution {
+    public boolean divisibleByK(int[] arr, int k) {
+
+        boolean[] dp = new boolean[k];
+
+        for (int x : arr) {
+
+            boolean[] next = dp.clone();
+
+            next[x % k] = true;
+
+            for (int r = 0; r < k; r++) {
+                if (dp[r]) {
+                    next[(r + x) % k] = true;
+                }
+            }
+
+            dp = next;
+
+            if (dp[0]) return true;
+        }
+
+        return false;
+    }
+}
