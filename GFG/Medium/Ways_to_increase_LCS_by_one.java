@@ -22,27 +22,49 @@ Constraints:
 
 */
 class Solution {
-    public boolean divisibleByK(int[] arr, int k) {
-
-        boolean[] dp = new boolean[k];
-
-        for (int x : arr) {
-
-            boolean[] next = dp.clone();
-
-            next[x % k] = true;
-
-            for (int r = 0; r < k; r++) {
-                if (dp[r]) {
-                    next[(r + x) % k] = true;
+    public int waysToIncreaseLCSBy1(String s1, String s2) {
+        
+        int n = s1.length(), m = s2.length();
+        
+        int[][] pre = new int[n + 1][m + 1];
+        int[][] suf = new int[n + 1][m + 1];
+        
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (s1.charAt(i - 1) == s2.charAt(j - 1))
+                    pre[i][j] = pre[i - 1][j - 1] + 1;
+                else
+                    pre[i][j] = Math.max(pre[i - 1][j], pre[i][j - 1]);
+            }
+        }
+        
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = m - 1; j >= 0; j--) {
+                if (s1.charAt(i) == s2.charAt(j))
+                    suf[i][j] = 1 + suf[i + 1][j + 1];
+                else
+                    suf[i][j] = Math.max(suf[i + 1][j], suf[i][j + 1]);
+            }
+        }
+        
+        int lcs = pre[n][m];
+        int ans = 0;
+        
+        for (int i = 0; i <= n; i++) {
+            
+            boolean[] used = new boolean[26];
+            
+            for (int j = 0; j < m; j++) {
+                
+                int c = s2.charAt(j) - 'a';
+                
+                if (!used[c] && pre[i][j] + suf[i][j + 1] == lcs) {
+                    used[c] = true;
+                    ans++;
                 }
             }
-
-            dp = next;
-
-            if (dp[0]) return true;
         }
-
-        return false;
+        
+        return ans;
     }
 }
