@@ -1,3 +1,5 @@
+package LEETCODE.MEDIUM;
+
 /* Given an integer array nums, return the number of longest increasing subsequences.
 
 Notice that the sequence has to be strictly increasing.
@@ -22,3 +24,46 @@ Constraints:
 -106 <= nums[i] <= 106
 The answer is guaranteed to fit inside a 32-bit integer.
 */
+class Solution {
+    public int findNumberOfLIS(int[] nums) {
+
+        int n = nums.length;
+
+        int[] len = new int[n];
+        int[] cnt = new int[n];
+
+        int maxLen = 0;
+
+        for (int i = 0; i < n; i++) {
+
+            len[i] = 1;
+            cnt[i] = 1;
+
+            for (int j = 0; j < i; j++) {
+
+                if (nums[j] < nums[i]) {
+
+                    if (len[j] + 1 > len[i]) {
+                        len[i] = len[j] + 1;
+                        cnt[i] = cnt[j];
+                    } 
+                    else if (len[j] + 1 == len[i]) {
+                        cnt[i] += cnt[j];
+                    }
+                }
+            }
+
+            maxLen = Math.max(maxLen, len[i]);
+        }
+
+        int ans = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (len[i] == maxLen) {
+                ans += cnt[i];
+            }
+        }
+
+        return ans;
+    }
+}
