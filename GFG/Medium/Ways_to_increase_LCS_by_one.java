@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given two strings s1 and s2 consisting of lowercase English letters of length n1 and n2 respectively, find the number of ways to insert exactly one character into string s1 such that the length of the Longest Common Subsequence (LCS) of both strings increases by exactly 1.
 
 Examples :
@@ -19,3 +21,28 @@ Constraints:
 1<= n1, n2 <=100
 
 */
+class Solution {
+    public boolean divisibleByK(int[] arr, int k) {
+
+        boolean[] dp = new boolean[k];
+
+        for (int x : arr) {
+
+            boolean[] next = dp.clone();
+
+            next[x % k] = true;
+
+            for (int r = 0; r < k; r++) {
+                if (dp[r]) {
+                    next[(r + x) % k] = true;
+                }
+            }
+
+            dp = next;
+
+            if (dp[0]) return true;
+        }
+
+        return false;
+    }
+}
