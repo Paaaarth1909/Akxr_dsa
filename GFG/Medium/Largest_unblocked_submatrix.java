@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given two integers n and m, and an array arr[][] of size k, where arr[i] = [r, c] represents a blocked cell (1-based indexing) in an n × m grid. Each blocked cell blocks its entire row and column. Find the largest continuous unblocked area in the grid.
 
 Note: No two blocked cells are in the same row or the same column.
@@ -22,4 +24,40 @@ Constraints:
 1 ≤ c ≤ m
 
 */
-s
+import java.util.*;
+
+class Solution {
+    public int largestArea(int n, int m, int[][] arr) {
+
+        ArrayList<Integer> rows = new ArrayList<>();
+        ArrayList<Integer> cols = new ArrayList<>();
+
+        for (int[] x : arr) {
+            rows.add(x[0]);
+            cols.add(x[1]);
+        }
+
+        Collections.sort(rows);
+        Collections.sort(cols);
+
+        int maxRow = getMaxGap(rows, n);
+        int maxCol = getMaxGap(cols, m);
+
+        return maxRow * maxCol;
+    }
+
+    private int getMaxGap(ArrayList<Integer> v, int limit) {
+
+        if (v.size() == 0) return limit;
+
+        int ans = v.get(0) - 1;
+
+        for (int i = 1; i < v.size(); i++) {
+            ans = Math.max(ans, v.get(i) - v.get(i - 1) - 1);
+        }
+
+        ans = Math.max(ans, limit - v.get(v.size() - 1));
+
+        return ans;
+    }
+}
