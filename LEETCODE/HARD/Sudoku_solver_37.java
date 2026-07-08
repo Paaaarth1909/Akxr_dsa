@@ -1,3 +1,5 @@
+package LEETCODE.HARD;
+
 /* Write a program to solve a Sudoku puzzle by filling the empty cells.
 
 A sudoku solution must satisfy all of the following rules:
@@ -27,3 +29,56 @@ board[i][j] is a digit or '.'.
 It is guaranteed that the input board has only one solution.
  
 */
+class Solution {
+
+    public void solveSudoku(char[][] board) {
+        solve(board);
+    }
+
+    private boolean solve(char[][] board) {
+
+        for (int i = 0; i < 9; i++) {
+
+            for (int j = 0; j < 9; j++) {
+
+                if (board[i][j] == '.') {
+
+                    for (char c = '1'; c <= '9'; c++) {
+
+                        if (isValid(board, i, j, c)) {
+
+                            board[i][j] = c;
+
+                            if (solve(board)) {
+                                return true;
+                            }
+
+                            board[i][j] = '.';
+                        }
+                    }
+
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private boolean isValid(char[][] board, int row, int col, char c) {
+
+        for (int i = 0; i < 9; i++) {
+
+            if (board[row][i] == c) return false;
+
+            if (board[i][col] == c) return false;
+
+            int r = 3 * (row / 3) + i / 3;
+            int cc = 3 * (col / 3) + i % 3;
+
+            if (board[r][cc] == c) return false;
+        }
+
+        return true;
+    }
+}
