@@ -1,3 +1,5 @@
+package GFG.Medium;
+
 /* Given an array arr[] and positive integer k, count total number of pairs in the array whose sum is divisible by k.
 
 Examples:
@@ -13,3 +15,21 @@ Constraints :
 1 ≤ arr[i] ≤ 106
 1 ≤ k ≤ 5*104
 */
+class Solution {
+    public int countKdivPairs(int[] arr, int k) {
+
+        int[] freq = new int[k];
+        int ans = 0;
+
+        for (int x : arr) {
+
+            int rem = x % k;
+            int need = (k - rem) % k;
+
+            ans += freq[need];
+            freq[rem]++;
+        }
+
+        return ans;
+    }
+}
