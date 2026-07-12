@@ -17,3 +17,35 @@ Constraints:
 1 ≤ arr.size() ≤ 105
 1 ≤ arr[i], k ≤ 106 
 */
+import java.util.*;
+
+class Solution {
+    public int maxAmount(int[] arr, int k) {
+
+        int MOD = 1000000007;
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+
+        for (int x : arr) {
+            if (x > 0) {
+                pq.offer(x);
+            }
+        }
+
+        long ans = 0;
+
+        while (k > 0 && !pq.isEmpty()) {
+
+            int cur = pq.poll();
+            ans = (ans + cur) % MOD;
+
+            if (cur > 1) {
+                pq.offer(cur - 1);
+            }
+
+            k--;
+        }
+
+        return (int) ans;
+    }
+}
