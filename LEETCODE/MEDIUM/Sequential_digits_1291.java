@@ -1,3 +1,4 @@
+package LEETCODE.MEDIUM;
 /* An integer has sequential digits if and only if each digit in the number is one more than the previous digit.
 
 Return a sorted list of all the integers in the range [low, high] inclusive that have sequential digits.
@@ -19,3 +20,29 @@ Constraints:
 10 <= low <= high <= 10^9
  
 */
+import java.util.*;
+
+class Solution {
+    public List<Integer> sequentialDigits(int low, int high) {
+
+        List<Integer> ans = new ArrayList<>();
+        String s = "123456789";
+
+        int minLen = String.valueOf(low).length();
+        int maxLen = String.valueOf(high).length();
+
+        for (int len = minLen; len <= maxLen; len++) {
+
+            for (int i = 0; i + len <= 9; i++) {
+
+                int num = Integer.parseInt(s.substring(i, i + len));
+
+                if (num >= low && num <= high) {
+                    ans.add(num);
+                }
+            }
+        }
+
+        return ans;
+    }
+}
