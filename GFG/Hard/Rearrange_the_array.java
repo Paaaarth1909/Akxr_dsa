@@ -1,3 +1,4 @@
+package GFG.Hard;
 /* Consider an array a[] = [1, 2, 3, ..., n] and a permutation b[] of size n containing all integers from 1 to n exactly once.
 
 The array b[] defines a rearrangement operation.
@@ -34,3 +35,59 @@ Constraints:
 a.size() = b.size() = n
 b[] is a permutation of integers from 1 to n. 
 */
+import java.util.*;
+
+class Solution {
+    static final int MOD = 1000000007;
+
+    int minOperations(int[] b) {
+
+        int n = b.length;
+        boolean[] vis = new boolean[n];
+        HashMap<Integer, Integer> maxPow = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+
+            if (vis[i]) continue;
+
+            int len = 0;
+            int cur = i;
+
+            while (!vis[cur]) {
+                vis[cur] = true;
+                cur = b[cur] - 1;
+                len++;
+            }
+
+            int x = len;
+
+            for (int p = 2; p * p <= x; p++) {
+                if (x % p == 0) {
+                    int cnt = 0;
+                    while (x % p == 0) {
+                        x /= p;
+                        cnt++;
+                    }
+                    maxPow.put(p, Math.max(maxPow.getOrDefault(p, 0), cnt));
+                }
+            }
+
+            if (x > 1) {
+                maxPow.put(x, Math.max(maxPow.getOrDefault(x, 0), 1));
+            }
+        }
+
+        long ans = 1;
+
+        for (Map.Entry<Integer, Integer> e : maxPow.entrySet()) {
+            int p = e.getKey();
+            int cnt = e.getValue();
+
+            while (cnt-- > 0) {
+                ans = (ans * p) % MOD;
+            }
+        }
+
+        return (int) ans;
+    }
+}
