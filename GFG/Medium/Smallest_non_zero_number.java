@@ -1,3 +1,4 @@
+package GFG.Medium;
 /* Given an array arr[], find the smallest number x such that when x is processed sequentially with each element of the array (from index 0 to n-1), it never becomes negative, under the following conditions:
 
 If x is greater than the current array element, x is increased by the difference between x and the array element.
@@ -24,3 +25,15 @@ Constraints:
 1 ≤ arr.size() ≤ 106
 1<= arr[i] <= 104 
 */
+class Solution {
+    public int find(int[] arr) {
+
+        int need = 0;
+
+        for (int i = arr.length - 1; i >= 0; i--) {
+            need = (need + arr[i] + 1) / 2;
+        }
+
+        return need;
+    }
+}
