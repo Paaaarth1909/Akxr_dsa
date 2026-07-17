@@ -1,3 +1,4 @@
+package LEETCODE.HARD;
 /* A transformation sequence from word beginWord to word endWord using a dictionary wordList is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:
 
 Every adjacent pair of words differs by a single letter.
@@ -32,3 +33,86 @@ beginWord != endWord
 All the words in wordList are unique.
 The sum of all shortest transformation sequences does not exceed 105.
 */
+import java.util.*;
+
+class Solution {
+
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+
+        Set<String> dict = new HashSet<>(wordList);
+        List<List<String>> ans = new ArrayList<>();
+
+        if (!dict.contains(endWord)) return ans;
+
+        Map<String, List<String>> parent = new HashMap<>();
+        Map<String, Integer> level = new HashMap<>();
+
+        Queue<String> q = new LinkedList<>();
+        q.offer(beginWord);
+        level.put(beginWord, 0);
+
+        int len = beginWord.length();
+
+        while (!q.isEmpty()) {
+
+            String word = q.poll();
+            int step = level.get(word);
+
+            char[] ch = word.toCharArray();
+
+            for (int i = 0; i < len; i++) {
+
+                char old = ch[i];
+
+                for (char c = 'a'; c <= 'z'; c++) {
+
+                    ch[i] = c;
+                    String next = new String(ch);
+
+                    if (!dict.contains(next)) continue;
+
+                    if (!level.containsKey(next)) {
+                        level.put(next, step + 1);
+                        q.offer(next);
+                        parent.putIfAbsent(next, new ArrayList<>());
+                        parent.get(next).add(word);
+                    } else if (level.get(next) == step + 1) {
+                        parent.get(next).add(word);
+                    }
+                }
+
+                ch[i] = old;
+            }
+        }
+
+        if (!level.containsKey(endWord)) return ans;
+
+        List<String> path = new ArrayList<>();
+        dfs(endWord, beginWord, parent, path, ans);
+
+        return ans;
+    }
+
+    private void dfs(String word, String beginWord,
+                     Map<String, List<String>> parent,
+                     List<String> path,
+                     List<List<String>> ans) {
+
+        path.add(word);
+
+        if (word.equals(beginWord)) {
+
+            List<String> temp = new ArrayList<>(path);
+            Collections.reverse(temp);
+            ans.add(temp);
+
+        } else if (parent.containsKey(word)) {
+
+            for (String p : parent.get(word)) {
+                dfs(p, beginWord, parent, path, ans);
+            }
+        }
+
+        path.remove(path.size() - 1);
+    }
+}
