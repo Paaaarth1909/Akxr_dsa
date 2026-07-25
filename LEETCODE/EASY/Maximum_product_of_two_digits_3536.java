@@ -1,3 +1,4 @@
+package LEETCODE.EASY;
 /* You are given a positive integer n.
 
 Return the maximum product of any two digits in n.
