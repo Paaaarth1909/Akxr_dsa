@@ -1,3 +1,4 @@
+package LEETCODE.HARD;
 /* A boolean expression is an expression that evaluates to either true or false. It can be in one of the following shapes:
 
 't' that evaluates to true.
@@ -38,3 +39,42 @@ Constraints:
 1 <= expression.length <= 2 * 104
 expression[i] is one following characters: '(', ')', '&', '|', '!', 't', 'f', and ','.
 */
+import java.util.*;
+
+class Solution {
+    public boolean parseBoolExpr(String expression) {
+
+        Stack<Character> st = new Stack<>();
+
+        for (char c : expression.toCharArray()) {
+
+            if (c == ',') continue;
+
+            if (c != ')') {
+                st.push(c);
+            } else {
+
+                int t = 0;
+                int f = 0;
+
+                while (st.peek() != '(') {
+                    if (st.pop() == 't') t++;
+                    else f++;
+                }
+
+                st.pop();
+                char op = st.pop();
+
+                if (op == '!') {
+                    st.push(f > 0 ? 't' : 'f');
+                } else if (op == '&') {
+                    st.push(f == 0 ? 't' : 'f');
+                } else {
+                    st.push(t > 0 ? 't' : 'f');
+                }
+            }
+        }
+
+        return st.pop() == 't';
+    }
+}
