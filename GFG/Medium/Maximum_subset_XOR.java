@@ -1,3 +1,4 @@
+package GFG.Medium;
 /* Given an array arr[], choose any subset of elements (possibly all elements) such that the XOR of the chosen elements is maximized.
 
 Examples:
@@ -13,3 +14,30 @@ Constraints:
 1 ≤ arr.size() ≤ 105
 1 ≤ arr[i] ≤ 106
 */
+class Solution {
+    public int maxSubsetXOR(int[] arr) {
+        
+        int[] basis = new int[31];
+
+        for (int x : arr) {
+            for (int i = 30; i >= 0; i--) {
+                if ((x & (1 << i)) == 0) continue;
+
+                if (basis[i] == 0) {
+                    basis[i] = x;
+                    break;
+                }
+
+                x ^= basis[i];
+            }
+        }
+
+        int ans = 0;
+
+        for (int i = 30; i >= 0; i--) {
+            ans = Math.max(ans, ans ^ basis[i]);
+        }
+
+        return ans;
+    }
+}
