@@ -1,3 +1,4 @@
+package GFG.Medium;
 /* Given two positive integer n and m. Find the number of arrays of size n that can be formed such that:
 
 Each element is in the range [1, m].
@@ -16,3 +17,36 @@ Constraints:
 1 ≤ n ≤ 11
 1 ≤ m ≤ 11 
 */
+class Solution {
+    public int count(int n, int m) {
+
+        int[][] dp = new int[n + 1][m + 1];
+
+        for (int j = 1; j <= m; j++) {
+            dp[1][j] = 1;
+        }
+
+        for (int i = 2; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+
+                int ways = 0;
+
+                for (int k = 1; k <= m; k++) {
+                    if (j % k == 0 || k % j == 0) {
+                        ways += dp[i - 1][k];
+                    }
+                }
+
+                dp[i][j] = ways;
+            }
+        }
+
+        int ans = 0;
+
+        for (int j = 1; j <= m; j++) {
+            ans += dp[n][j];
+        }
+
+        return ans;
+    }
+}
