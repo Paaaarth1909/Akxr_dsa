@@ -1,3 +1,4 @@
+package LEETCODE.MEDIUM;
 /* Alice and Bob play a game with piles of stones. There are an even number of piles arranged in a row, and each pile has a positive integer number of stones piles[i].
 
 The objective of the game is to end with the most stones. The total number of stones across all the piles is odd, so there are no ties.
@@ -31,3 +32,28 @@ piles.length is even.
 1 <= piles[i] <= 500
 sum(piles[i]) is odd.
 */
+class Solution {
+    public boolean stoneGame(int[] piles) {
+
+        int n = piles.length;
+        int[][] dp = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = piles[i];
+        }
+
+        for (int len = 2; len <= n; len++) {
+            for (int i = 0; i + len - 1 < n; i++) {
+
+                int j = i + len - 1;
+
+                dp[i][j] = Math.max(
+                    piles[i] - dp[i + 1][j],
+                    piles[j] - dp[i][j - 1]
+                );
+            }
+        }
+
+        return dp[0][n - 1] > 0;
+    }
+}
