@@ -1,3 +1,4 @@
+package GFG.Easy;
 /* Given an array arr[] of positive integers and an integer k, find the total number of pairs of elements that have an absolute difference strictly less than k.
 
 Note:  Pair (i, j) is considered the same as (j, i).
@@ -16,3 +17,26 @@ Constraints:
 1 ≤ arr[i] ≤ 105
 
 */
+import java.util.Arrays;
+
+class Solution {
+    public static int countPairs(int arr[], int k) {
+
+        Arrays.sort(arr);
+
+        int n = arr.length;
+        int ans = 0;
+        int j = 0;
+
+        for (int i = 0; i < n; i++) {
+
+            while (j < n && arr[j] - arr[i] < k) {
+                j++;
+            }
+
+            ans += j - i - 1;
+        }
+
+        return ans;
+    }
+}
