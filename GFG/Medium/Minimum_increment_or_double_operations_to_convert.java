@@ -1,3 +1,4 @@
+package GFG.Medium;
 /* Given an array arr[]. Initially, you have another array containing only 0s.
 In one operation, you may either:
 
@@ -27,3 +28,29 @@ Constraints:
 0 ≤ arr[i] ≤ 109
 
 */
+class Solution {
+    public int countMinOperations(int arr[]) {
+
+        int inc = 0;
+        int dbl = 0;
+
+        for (int x : arr) {
+
+            int bits = 0;
+
+            while (x > 0) {
+                if ((x & 1) == 1) {
+                    inc++;
+                }
+                x >>= 1;
+                if (x > 0) {
+                    bits++;
+                }
+            }
+
+            dbl = Math.max(dbl, bits);
+        }
+
+        return inc + dbl;
+    }
+}
