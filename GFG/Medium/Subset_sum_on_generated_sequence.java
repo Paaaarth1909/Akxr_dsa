@@ -1,3 +1,4 @@
+package GFG.Medium;
 /* There are n children standing in a queue, each assigned a number arr[i]. The teacher writes s on a paper and gives it to the first child.
 
 Each child writes the sum of all numbers already on the paper and arr[i], then passes it to the next child.
@@ -17,3 +18,68 @@ Constraints:
 1 ≤ s ≤ 109
 0 ≤ x ≤ 109
 */
+import java.util.*;
+
+ class Solution {
+     public boolean isPossible(int[] arr, int s, int x) {
+
+         ArrayList<Long> nums = new ArrayList<>();
+
+         long sum = s;
+         nums.add(sum);
+
+         for (int a : arr) {
+             long next = sum + a;
+
+             if (next > x) {
+                 break;
+             }
+
+             nums.add(next);
+             sum += next;
+         }
+
+         if (x == 0) {
+             return true;
+         }
+
+         int n = nums.size();
+         int mid = n / 2;
+
+         HashSet<Long> set = new HashSet<>();
+
+         for (int mask = 0; mask < (1 << mid); mask++) {
+             long sum1 = 0;
+
+             for (int i = 0; i < mid; i++) {
+                 if ((mask & (1 << i)) != 0) {
+                     sum1 += nums.get(i);
+                 }
+             }
+
+             if (sum1 == x) {
+                 return true;
+             }
+
+             set.add(sum1);
+         }
+
+         int right = n - mid;
+
+         for (int mask = 0; mask < (1 << right); mask++) {
+             long sum2 = 0;
+
+             for (int i = 0; i < right; i++) {
+                 if ((mask & (1 << i)) != 0) {
+                     sum2 += nums.get(mid + i);
+                 }
+             }
+
+             if (set.contains((long) x - sum2)) {
+                 return true;
+             }
+         }
+
+         return false;
+     }
+ }
