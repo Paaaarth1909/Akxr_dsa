@@ -14,3 +14,25 @@ Constraints:
 1 ≤ arr.size() ≤ 10
 -10 ≤ arr[i] ≤ 10
 */
+class Solution {
+    public int minProd(int[] arr) {
+
+        int n = arr.length;
+        long ans = Long.MAX_VALUE;
+
+        for (int mask = 1; mask < (1 << n); mask++) {
+
+            long product = 1;
+
+            for (int i = 0; i < n; i++) {
+                if ((mask & (1 << i)) != 0) {
+                    product *= arr[i];
+                }
+            }
+
+            ans = Math.min(ans, product);
+        }
+
+        return (int) ans;
+    }
+}
