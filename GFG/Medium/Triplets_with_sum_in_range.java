@@ -14,3 +14,38 @@ Constraints:
 1 ≤ l ≤ r ≤ 109
 
 */
+import java.util.*;
+
+ class Solution {
+
+     public int countTriplets(int[] arr, int l, int r) {
+
+         Arrays.sort(arr);
+
+         return countAtMost(arr, r) - countAtMost(arr, l - 1);
+     }
+
+     int countAtMost(int[] arr, int sum) {
+
+         int n = arr.length;
+         int ans = 0;
+
+         for (int i = 0; i < n - 2; i++) {
+
+             int left = i + 1;
+             int right = n - 1;
+
+             while (left < right) {
+
+                 if (arr[i] + arr[left] + arr[right] <= sum) {
+                     ans += right - left;
+                     left++;
+                 } else {
+                     right--;
+                 }
+             }
+         }
+
+         return ans;
+     }
+ }
