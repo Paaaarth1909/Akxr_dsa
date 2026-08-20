@@ -16,3 +16,41 @@ Constraints:
 0 ≤ root.node->data ≤ 105
 2 ≤ Number of edges ≤ 104
 */
+class Node
+{
+    int data;
+    Node left, right;
+
+    Node(int item)
+    {
+        data = item;
+        left = right = null;
+    }
+}
+
+
+class Solution {
+    int ans = Integer.MIN_VALUE;
+
+    int maxDiff(Node root) {
+        findMin(root);
+        return ans;
+    }
+
+    int findMin(Node node) {
+        if (node == null) {
+            return Integer.MAX_VALUE;
+        }
+
+        int left = findMin(node.left);
+        int right = findMin(node.right);
+
+        int minChild = Math.min(left, right);
+
+        if (minChild != Integer.MAX_VALUE) {
+            ans = Math.max(ans, node.data - minChild);
+        }
+
+        return Math.min(node.data, minChild);
+    }
+}
