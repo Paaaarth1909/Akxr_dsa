@@ -34,3 +34,15 @@ Constraints:
 1 <= k <= nums.length <= 105
 1 <= nums[i] <= 109
 */
+import java.util.Arrays;
+class Solution {
+    public int maximizeSumOfSquares(int[] nums, int k) {
+        int n = nums.length;
+        Arrays.sort(nums);
+        long sum = 0;
+        for (int i = n - 1; i >= n - k; i--) {
+            sum += (long) nums[i] * nums[i];
+        }
+        return (int) (sum % 1000000007);
+    }
+}   
